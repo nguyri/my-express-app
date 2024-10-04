@@ -5,6 +5,8 @@ const PORT = process.env.PORT || 3001;  // You can set the port using an environ
 
 
 app.use(cors());
+app.use(express.json());
+
 // Define a simple route
 app.get('/', (req, res) => {
     res.send('Hello, World!');
@@ -17,8 +19,9 @@ app.get('/api/message', (req, res) => {
 
 // Example POST API endpoint
 app.post('/api/data', (req, res) => {
-    const { name } = req.body;
-    res.json({ message: `Hello, ${name}!` });
+    // console.log(req.body);
+    const { query } = req.body;
+    res.json({ message: `Hello, ${query}!` });
   });
 
 // Start the server
