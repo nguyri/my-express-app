@@ -1,7 +1,10 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3001;  // You can set the port using an environment variable or default to 3000
 
+
+app.use(cors());
 // Define a simple route
 app.get('/', (req, res) => {
     res.send('Hello, World!');
