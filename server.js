@@ -6,12 +6,13 @@ const validator = require('./validator');
 
 
 const formatOutput = (query) => {
-  let output = {query};
   let tests = [validator.validHand, validator.validTile]
+  let results = []
   for (const test of tests) {
     let result = test(query) ? 'Pass' : 'Fail';
-    output[test.name] = result;
+    results.push(result);
   }
+  let output = {query, tests:[tests.map((test) => test.name)], results};
   console.log(output);
   return output;
 }
