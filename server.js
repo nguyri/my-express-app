@@ -2,7 +2,19 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3001;  // You can set the port using an environment variable or default to 3000
+const validator = require('./validator');
 
+
+const formatOutput = (query) => {
+  let output = {query};
+  let tests = [validator.validHand, validator.validTile]
+  for (const test of tests) {
+    let result = test(query) ? 'Pass' : 'Fail';
+    output[test.name] = result;
+  }
+  console.log(output);
+  return output;
+}
 
 app.use(cors());
 app.use(express.json());
@@ -21,7 +33,7 @@ app.get('/api/message', (req, res) => {
 app.post('/api/data', (req, res) => {
     // console.log(req.body);
     const { query } = req.body;
-    res.json({ message: `Hello, ${query}!` });
+    res.json({message:JSON.stringify(formatOutput(query), null, 2)});
   });
 
 // Start the server
