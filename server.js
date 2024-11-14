@@ -12,7 +12,7 @@ const formatOutput = (query) => {
     let result = test(query) ? 'Pass' : 'Fail';
     results.push(result);
   }
-  let output = {query, tests:[tests.map((test) => test.name)], results};
+  let output = {query, tests:tests.map((test) => test.name), results};
   console.log(output);
   return output;
 }
