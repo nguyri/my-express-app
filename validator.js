@@ -15,14 +15,18 @@ function validTile (tile) {
     return 0 < value && value < 10;
   }
   
-function validHand (handStr) {
+function allValidTiles (handStr) {
     // valid format is b1b2b3c1c2c3m1m2m3drdrdrdgdg, 4 melds one pair. Start with making sure tiles are valid
-    if (handStr.length != 28) return false;
+    
     const tiles = hand(handStr);
     console.log(tiles);
     let allValid = tiles.every(tile => validTile(tile));
     return allValid;
   }
+  
+function validLength (handStr) {
+    return handStr.length === 28; 
+}
 
   // useful functions for setting up and checking hands.
 
@@ -42,4 +46,4 @@ function hand (handStr) {
     tiles.sort((tileA, tileB) => tileOrder(tileA, tileB))
     return tiles;
 }
-module.exports = {validTile, validHand};
+module.exports = {validTile, allValidTiles, validLength};

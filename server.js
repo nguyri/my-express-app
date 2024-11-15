@@ -2,17 +2,19 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3001;  // You can set the port using an environment variable or default to 3000
-const validator = require('./validator');
+const v = require('./validator');
 
 
 const formatOutput = (query) => {
-  let tests = [validator.validHand, validator.validTile]
+  let tests = [v.validHand, v.allValidTiles, v.allValidTiles]
   let results = []
   for (const test of tests) {
     let result = test(query) ? 'Pass' : 'Fail';
     results.push(result);
   }
-  let output = {query, tests:tests.map((test) => test.name), results};
+  const spacedQuery = query.match(/.{1,2}/g).join(" ");
+  console.log(spacedQuery);
+  let output = {query:spacedQuery, tests:tests.map((test) => test.name), results};
   console.log(output);
   return output;
 }
