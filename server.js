@@ -6,7 +6,7 @@ const v = require('./validator');
 
 
 const formatOutput = (query) => {
-  let tests = [v.validHand, v.allValidTiles, v.allValidTiles]
+  let tests = [v.allValidTiles, v.allValidTiles, v.riichi]
   let results = []
   for (const test of tests) {
     let result = test(query) ? 'Pass' : 'Fail';

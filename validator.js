@@ -16,14 +16,44 @@ function validTile (tile) {
   }
   
 function allValidTiles (handStr) {
-    // valid format is b1b2b3c1c2c3m1m2m3drdrdrdgdg, 4 melds one pair. Start with making sure tiles are valid
-    
-    const tiles = hand(handStr);
+    const tiles = handTiles(handStr);
     console.log(tiles);
     let allValid = tiles.every(tile => validTile(tile));
     return allValid;
   }
-  
+
+function suitGroups(tiles) {
+    let validSuit = ['b','c','m','d','w']
+    let suits = []
+    tiles.forEach((tile) => {
+        const index = validSuit.findIndex((suit) => suit == tile[0]);
+        suits[index] ? suits[index].push(tile) : suits[index] = [tile];
+    })
+    return suits;
+}
+
+function validMeld(subTile) {
+    console.log('subTile: ', subTile);
+    if (subTile.length % 3 != 0) return; // doesn't work for drdrdrdgdg
+    return subTile;
+}
+
+function validPair(subTile) {
+    return true;
+}
+
+function riichi (handStr) {
+    const tiles = handTiles(handStr)
+    const suits = suitGroups(tiles);
+    console.log('suits: ', suits)
+    // only interprets first available set of melds
+    const melds = suits.map((suit) => validMeld(suit))
+    console.log('melds: ', melds);
+    // validPair needs to be run on a subset of tiles
+    if (melds && melds.length === 4 && validPair(tiles)) return true;
+    return false;
+}
+
 function validLength (handStr) {
     return handStr.length === 28; 
 }
@@ -37,7 +67,7 @@ function tileOrder (tileA, tileB) {
     return tileC < tileD ? -1 : 1;
 }
 
-function hand (handStr) {
+function handTiles (handStr) {
     if (handStr.length != 28) return false;
     const tiles = [];
     for (let i = 0; i < handStr.length; i+=2) {
@@ -46,4 +76,4 @@ function hand (handStr) {
     tiles.sort((tileA, tileB) => tileOrder(tileA, tileB))
     return tiles;
 }
-module.exports = {validTile, allValidTiles, validLength};
+module.exports = {allValidTiles, validLength, riichi};
