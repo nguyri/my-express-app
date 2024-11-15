@@ -22,7 +22,12 @@ function allValidTiles (handStr) {
     return allValid;
   }
 
+function validLength (handStr) {
+    return handStr.length === 28; 
+}
+
 function suitGroups(tiles) {
+    if (!inputIsTiles(tiles)) return;
     let validSuit = ['b','c','m','d','w']
     let suits = []
     tiles.forEach((tile) => {
@@ -42,6 +47,7 @@ function hasMeld(suitGroup) {
 
 function hasMeldAndPair(suitGroup) {
     //todo
+    validMelds(suitGroup);
     return true;
 }
 
@@ -52,6 +58,7 @@ function validMelds(suitGroup) {
     for(let i = 0; i < suitGroup.length / 3; i++) {
         melds.push(suitGroup.slice(i, i + 3));
     }
+    console.log('validMelds: ', melds);
     return melds.forEach(meld => validMeld(meld));
 }
 
@@ -70,6 +77,11 @@ function isTriple(subTile) {
     if (subTile.length != 3) return false;
     const numbers = getNumbers(subTile);
     return numbers
+}
+
+function inputIsTiles(input) {
+    if(!Array.isArray(input)) return false;
+    return input.every((tile) => validTile(tile));
 }
 
 function getNumbers(subTile) {
@@ -109,11 +121,6 @@ function riichi (handStr) {
     if (melds && melds.length === 4 && validPair(tiles)) return true;
     return false;
 }
-
-function validLength (handStr) {
-    return handStr.length === 28; 
-}
-
   // useful functions for setting up and checking hands.
 
 function tileOrder (tileA, tileB) {
@@ -132,4 +139,8 @@ function handTiles (handStr) {
     tiles.sort((tileA, tileB) => tileOrder(tileA, tileB))
     return tiles;
 }
-module.exports = {allValidTiles, validLength, riichi};
+
+module.exports = {validTile, allValidTiles, validLength, suitGroups, hasMeld, hasMeldAndPair, 
+    validMelds, validMeld, isStraight, isTriple, getNumbers, getSuits, validSuit, validPair, riichi, tileOrder, handTiles,
+    inputIsTiles,
+}
