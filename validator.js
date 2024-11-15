@@ -32,22 +32,78 @@ function suitGroups(tiles) {
     return suits;
 }
 
+function hasMeld(suitGroup) {
+    console.log('suitGroup: ', suitGroup);
+    const remainder = suitGroup.length % 3;
+    if (remainder == 1) return; // remainder cannot be 1
+    if (remainder == 2) return hasMeldAndPair(suitGroup);
+    if (remainder == 0) return validMelds(suitGroup);
+}
+
+function hasMeldAndPair(suitGroup) {
+    //todo
+    return true;
+}
+
+function validMelds(suitGroup) {
+    // input should be matching suits divisible by 3
+    // naively pick the first set for now
+    let melds = []
+    for(let i = 0; i < suitGroup.length / 3; i++) {
+        melds.push(suitGroup.slice(i, i + 3));
+    }
+    return melds.forEach(meld => validMeld(meld));
+}
+
 function validMeld(subTile) {
-    console.log('subTile: ', subTile);
-    if (subTile.length % 3 != 0) return; // doesn't work for drdrdrdgdg
-    return subTile;
+    return isTriple(subTile) || isStraight(subTile);
+}
+
+function isStraight(subTile) {
+    // subTile is ordered
+    if (subTile.length != 3) return false;
+    const numbers = getNumbers(subTile);
+    return numbers[0] + 2 === numbers[1] + 1 === numbers[2]
+}
+
+function isTriple(subTile) {
+    if (subTile.length != 3) return false;
+    const numbers = getNumbers(subTile);
+    return numbers
+}
+
+function getNumbers(subTile) {
+    let numbers = []
+    if (!subTile.every((tile) => tile.length === 2)) return;
+    subTile.forEach((tile) => numbers.push(tile.charAt(1)));
+    return numbers;
+}
+
+function getSuits(subTile) {
+    let suits = []
+    subTile.forEach((tile) => {
+        if (validSuit(tile) && !suits.includes(tile.charAt(0)))
+            suits.push(tile.charAt(0));
+    });
+    return suits;
+}
+
+function validSuit(tile) {
+    if (tile.length !== 2) return false;
+    const validSuit = ['b','c','m','d','w']
+    return validSuit.includes(tile.charAt(0));
 }
 
 function validPair(subTile) {
-    return true;
+    if (subTile.length !== 2) return false
+    return subTile[0] === subTile[1];
 }
 
 function riichi (handStr) {
     const tiles = handTiles(handStr)
     const suits = suitGroups(tiles);
     console.log('suits: ', suits)
-    // only interprets first available set of melds
-    const melds = suits.map((suit) => validMeld(suit))
+    const melds = suits.map((suit) => hasMeld(suit))
     console.log('melds: ', melds);
     // validPair needs to be run on a subset of tiles
     if (melds && melds.length === 4 && validPair(tiles)) return true;
