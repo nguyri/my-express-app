@@ -38,9 +38,9 @@ function suitGroups(tiles) {
 }
 
 function hasMeld(suitGroup) {
-    console.log('suitGroup: ', suitGroup);
+    // console.log('suitGroup: ', suitGroup);
     const remainder = suitGroup.length % 3;
-    if (remainder == 1) return; // remainder cannot be 1
+    if (remainder == 1) return; // no valid options if remainder is 1
     if (remainder == 2) return hasMeldAndPair(suitGroup);
     if (remainder == 0) return validMelds(suitGroup);
 }
@@ -70,7 +70,11 @@ function isStraight(subTile) {
     // subTile is ordered
     if (subTile.length != 3) return false;
     const numbers = getNumbers(subTile);
-    return numbers[0] + 2 === numbers[1] + 1 === numbers[2]
+    console.log(numbers);
+    console.log(numbers[0] + 2);
+    console.log(numbers[1] + 1);
+    console.log(numbers[2]);
+    return numbers[0] + 2 === numbers[1] + 1 && numbers[1] + 1 === numbers[2]
 }
 
 function isTriple(subTile) {
@@ -87,7 +91,7 @@ function inputIsTiles(input) {
 function getNumbers(subTile) {
     let numbers = []
     if (!subTile.every((tile) => tile.length === 2)) return;
-    subTile.forEach((tile) => numbers.push(tile.charAt(1)));
+    subTile.forEach((tile) => numbers.push(parseInt(tile.charAt(1))));
     return numbers;
 }
 

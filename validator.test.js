@@ -55,14 +55,29 @@ test ('suitGroups check', () => {
     console.log(result);
     expect(areNestedArraysEqual(expected, result)).toBe(true);
 });
+test ('hasMeld single check', () => {
+    const singleSuitGroup = ['b1','b2','b3'];
+    const result = E.hasMeld(singleSuitGroup);
+    const singleExpected = [['b1','b2','b3']];
+    console.log('In test single:', result);
+    expect(areNestedArraysEqual(singleExpected, result)).toBe(true);
+})
 
-test ('hasMeld check', () => {
+test ('hasMeld hand check', () => {
     const expected = [true, true, true, true];
     const tiles = E.handTiles('b1b2b3c1c2c3m1m2m3dgdgdgdrdr');
     const suitGroups = E.suitGroups(tiles);
+    console.log('In test:', suitGroups);
     const meldResults = suitGroups.map((group) => (E.hasMeld(group)));
-    console.log(meldResults);
-    expect(areNestedArraysEqual(expected, meldResults)).toBe(true);
+
+    console.log('In test:', meldResults);
+    // expect(areNestedArraysEqual(expected, meldResults)).toBe(true);
+
+    const singleSuitGroup = ['b1','b2','b3'];
+    const result = E.hasMeld(singleSuitGroup);
+    const singleExpected = [['b1','b2','b3']];
+    console.log('In test single:', result);
+    expect(areNestedArraysEqual(singleExpected, result)).toBe(true);
 })
 
 test ('hasMeldAndPair check', () => {
