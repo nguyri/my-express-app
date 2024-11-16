@@ -149,10 +149,11 @@ function tileOrder (tileA, tileB) {
 
 function replaceHonorNum(tile) {
     if (tile.length != 2) return;
-    const dragons = {d:1, r:2, w:3}
+    const dragons = {g:1, r:2, w:3}
     const winds = {n:1, e:2, s:3, w:4}
     const suit = tile.charAt(0)
     const honorNum = tile.charAt(1)
+    console.log(tile, suit, honorNum)
     if (suit === 'd') return `d${dragons[honorNum]}`
     if (suit === 'w') return `w${winds[honorNum]}`
     return;

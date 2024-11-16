@@ -154,12 +154,16 @@ test ('tileOrder check', () => {
     expect(E.tileOrder('b1','b2') === -1).toBe(true);
 })
 
-test ('replaceHonorNum check', () => {
-    expect(E.replaceHonorNum('dg') === 'd1').toBe(true);
+test.only ('replaceHonorNum check', () => {
+    const result = E.replaceHonorNum('dg');
+    console.log(result);
+    expect(result === 'd1').toBe(true);
 })
 
 test ('replaceHonorNum check 2', () => {
-    expect(E.replaceHonorNum('we') === 'w2').toBe(true);
+    const result = E.replaceHonorNum('we');
+    // console.log(result);
+    expect( result === 'w2').toBe(true);
 })
 
 test ('handTiles check', () =>  {
