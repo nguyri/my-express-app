@@ -113,9 +113,14 @@ function getNumbers(subTile) {
     return numbers;
 }
 
-function getSuits(subTile) {
+function getSuits(groups) {
+    //either a nested array or an array with a single suited group in it
     let suits = []
-    subTile.forEach((tile) => {
+    console.log(groups);
+    groups.forEach((group) => {
+        if (group.length < 1) return;
+        const tile = group.at(0)
+        if (suits.length === 0 && validSuit(tile)) {suits.push(tile.charAt(0))};
         if (validSuit(tile) && !suits.includes(tile.charAt(0)))
             suits.push(tile.charAt(0));
     });
@@ -179,7 +184,7 @@ function handTiles (handStr) {
     return tiles;
 }
 
-module.exports = {validTile, allValidTiles, validLength, suitGroups, hasMeld, hasMeldAndPair: hasMeldsAndPair, 
+module.exports = {validTile, allValidTiles, validLength, suitGroups, hasMeld, hasMeldsAndPair, 
     validMelds, validMeld, isStraight, isTriple, isPair, getNumbers, getSuits, validSuit, validPair, riichi,
     replaceHonorNum, tileOrder, handTiles,inputIsTiles,
 }

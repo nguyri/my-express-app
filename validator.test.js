@@ -136,9 +136,11 @@ test ('getNumbers check', () => {
 })
 
 test ('getSuits check', () => {
-    const input = [b,c]
+    const input = ['b','c']
     const subTile = [['b1','b2','b3'],['c1','c2','c3']];
-    expect(areNestedArraysEqual(E.getSuits(subTile),input)).toBe(true);
+    const result = E.getSuits(subTile);
+    console.log(result);
+    expect(areNestedArraysEqual(result,input)).toBe(true);
 })
 
 test ('validSuit check', () => {
