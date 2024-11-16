@@ -49,7 +49,7 @@ function areNestedArraysEqual(arr1, arr2) {
   }
 
 test ('suitGroups check', () => {
-    const expected = [['b1','b2','b3'],['c1','c2','c3'],['m1','m2','m3'],['dg','dg','dg','dr','dr']];
+    const expected = [['b1','b2','b3'],['c1','c2','c3'],['m1','m2','m3'],['d1','d1','d1','d2','d2']];
     const tiles = E.handTiles('b1b2b3c1c2c3m1m2m3dgdgdgdrdr');
     const result = E.suitGroups(tiles);
     console.log(result);
@@ -76,9 +76,9 @@ test ('hasMeld hand check', () => {
 })
 
 test ('hasMeldAndPair check', () => {
-    const singleSuitGroup = ['dg','dg','dg', 'dr', 'dr'];
+    const singleSuitGroup = ['d1','d1','d1', 'd2', 'd2'];
     const result = E.hasMeldAndPair(singleSuitGroup);
-    const singleExpected = [['dg','dg','dg'],['dr','dr']];
+    const singleExpected = [['d1','d1','d1'],['d2','d2']];
     console.log('In test single:', result);
     expect(areNestedArraysEqual(singleExpected, result)).toBe(true);
 })
@@ -99,7 +99,7 @@ test ('validMeld check', () => {
 
 
 test ('validMeld check 2', () => {
-    const singleSuitGroup = ['dg','dg','dg'];
+    const singleSuitGroup = ['d1','d1','d1'];
     const result = E.validMeld(singleSuitGroup);
     expect(result).toBe(true);
 })
@@ -168,6 +168,6 @@ test ('replaceHonorNum check 2', () => {
 
 test ('handTiles check', () =>  {
     const str = 'b1b2b3c1c2c3m1m2m3dgdgdgdrdr';
-    const expected = ['b1','b2','b3','c1','c2','c3','m1','m2','m3','dg','dg','dg','dr','dr'];
+    const expected = ['b1','b2','b3','c1','c2','c3','m1','m2','m3','d1','d1','d1','d2','d2'];
     expect(areNestedArraysEqual(E.handTiles(str),expected)).toBe(true);
 })
