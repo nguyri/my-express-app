@@ -80,9 +80,9 @@ test ('hasMeld hand check', () => {
     expect(areNestedArraysEqual(expected, meldResults)).toBe(true);
 })
 
-test ('hasMeldAndPair check', () => {
+test.only ('hasMeldsAndPair check', () => {
     const singleSuitGroup = ['d1','d1','d1', 'd2', 'd2'];
-    const result = E.hasMeldAndPair(singleSuitGroup);
+    const result = E.hasMeldsAndPair(singleSuitGroup);
     const singleExpected = [['d1','d1','d1'],['d2','d2']];
     console.log('In test single:', result);
     expect(areNestedArraysEqual(singleExpected, result)).toBe(true);
