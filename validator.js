@@ -70,17 +70,13 @@ function isStraight(subTile) {
     // subTile is ordered
     if (subTile.length != 3) return false;
     const numbers = getNumbers(subTile);
-    console.log(numbers);
-    console.log(numbers[0] + 2);
-    console.log(numbers[1] + 1);
-    console.log(numbers[2]);
     return numbers[0] + 2 === numbers[1] + 1 && numbers[1] + 1 === numbers[2]
 }
 
 function isTriple(subTile) {
     if (subTile.length != 3) return false;
     const numbers = getNumbers(subTile);
-    return numbers
+    return numbers[0] === numbers[1] && numbers[1] === numbers[2]
 }
 
 function inputIsTiles(input) {

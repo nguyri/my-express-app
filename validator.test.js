@@ -87,13 +87,17 @@ test ('hasMeldAndPair check', () => {
 })
 
 test ('validMelds check', () => {
-    expect(false).toBe(true);
-    //todo
+    const singleSuitGroup = ['b1','b2','b3'];
+    const result = E.validMelds(singleSuitGroup);
+    const singleExpected = [['b1','b2','b3']];
+    // console.log(':', result);
+    expect(areNestedArraysEqual(singleExpected, result)).toBe(true);
 })
 
 test ('validMeld check', () => {
-    expect(false).toBe(true);
-    //todo
+    const singleSuitGroup = ['b1','b2','b3'];
+    const result = E.validMeld(singleSuitGroup);
+    expect(result).toBe(true);
 })
 
 test ('isStraight check', () => {
