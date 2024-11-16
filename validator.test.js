@@ -65,14 +65,19 @@ test ('hasMeld single check', () => {
 })
 
 test ('hasMeld hand check', () => {
-    const expected = [true, true, true, true];
     const tiles = E.handTiles('b1b2b3c1c2c3m1m2m3dgdgdgdrdr');
     const suitGroups = E.suitGroups(tiles);
     console.log('In test:', suitGroups);
     const meldResults = suitGroups.map((group) => (E.hasMeld(group)));
+    const expected = [
+        [['b1','b2','b3']],
+        [['c1','c2','c3']],
+        [['m1','m2','m3']], 
+        [['d1','d1','d1'],['d2','d2']]
+    ];
 
     console.log('In test:', meldResults);
-    expect(areNestedArraysEqual(singleExpected, result)).toBe(true);
+    expect(areNestedArraysEqual(expected, meldResults)).toBe(true);
 })
 
 test ('hasMeldAndPair check', () => {
