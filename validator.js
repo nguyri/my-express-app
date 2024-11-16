@@ -1,6 +1,7 @@
 
 
 function validTile (tile) {
+    //dg or d1 acceptable..
     let validSuit = ['b','c','m', 'd', 'w']
     let validDragon = ['r','w','g']
     let validWind = ['n','e','s','w']
@@ -8,7 +9,11 @@ function validTile (tile) {
     let suit = tile.at(0);
     let value = tile.at(1);
     if (!validSuit.some(valid => valid === suit)) return false;
-  
+    
+    const parsed = parseInt(value)
+    if( parsed && suit === 'd') return ( parsed >= 1 && parsed <=3 )
+    if( parsed && suit === 'w' ) return ( parsed >= 1 && parsed <=4 )
+
     if ( suit === 'd' ) return (validDragon.some(valid => valid === value))
     if ( suit === 'w' ) return (validWind.some(valid => valid === value))
   
@@ -149,13 +154,15 @@ function tileOrder (tileA, tileB) {
 
 function replaceHonorNum(tile) {
     if (tile.length != 2) return;
+    const suit = tile.charAt(0)
+    const value = tile.charAt(1)
+    if(parseInt(value)) return tile;
+
     const dragons = {g:1, r:2, w:3}
     const winds = {n:1, e:2, s:3, w:4}
-    const suit = tile.charAt(0)
-    const honorNum = tile.charAt(1)
-    console.log(tile, suit, honorNum)
-    if (suit === 'd') return `d${dragons[honorNum]}`
-    if (suit === 'w') return `w${winds[honorNum]}`
+    console.log(tile, suit, value)
+    if (suit === 'd') return `d${dragons[value]}`
+    if (suit === 'w') return `w${winds[value]}`
     return;
 }
 

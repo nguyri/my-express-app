@@ -154,7 +154,7 @@ test ('tileOrder check', () => {
     expect(E.tileOrder('b1','b2') === -1).toBe(true);
 })
 
-test.only ('replaceHonorNum check', () => {
+test ('replaceHonorNum check', () => {
     const result = E.replaceHonorNum('dg');
     console.log(result);
     expect(result === 'd1').toBe(true);
