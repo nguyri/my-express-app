@@ -72,18 +72,15 @@ test ('hasMeld hand check', () => {
     const meldResults = suitGroups.map((group) => (E.hasMeld(group)));
 
     console.log('In test:', meldResults);
-    // expect(areNestedArraysEqual(expected, meldResults)).toBe(true);
-
-    const singleSuitGroup = ['b1','b2','b3'];
-    const result = E.hasMeld(singleSuitGroup);
-    const singleExpected = [['b1','b2','b3']];
-    console.log('In test single:', result);
     expect(areNestedArraysEqual(singleExpected, result)).toBe(true);
 })
 
 test ('hasMeldAndPair check', () => {
-    expect(false).toBe(true);
-    //todo
+    const singleSuitGroup = ['dg','dg','dg', 'dr', 'dr'];
+    const result = E.hasMeldAndPair(singleSuitGroup);
+    const singleExpected = [['dg','dg','dg'],['dr','dr']];
+    console.log('In test single:', result);
+    expect(areNestedArraysEqual(singleExpected, result)).toBe(true);
 })
 
 test ('validMelds check', () => {
@@ -100,6 +97,13 @@ test ('validMeld check', () => {
     expect(result).toBe(true);
 })
 
+
+test ('validMeld check 2', () => {
+    const singleSuitGroup = ['dg','dg','dg'];
+    const result = E.validMeld(singleSuitGroup);
+    expect(result).toBe(true);
+})
+
 test ('isStraight check', () => {
     const input = ['b1','b2','b3']
     expect(E.isStraight(input)).toBe(true);
@@ -108,6 +112,11 @@ test ('isStraight check', () => {
 test ('isTriple check', () => {
     const input = ['b1','b1','b1']
     expect(E.isTriple(input)).toBe(true);
+})
+
+test ('isPair check', () => {
+    const input = ['b1','b1']
+    expect(E.isPair(input)).toBe(true);
 })
 
 test ('inputIsTiles check', () => {
@@ -143,6 +152,14 @@ test ('riichi check', () => {
 
 test ('tileOrder check', () => {
     expect(E.tileOrder('b1','b2') === -1).toBe(true);
+})
+
+test ('replaceHonorNum check', () => {
+    expect(E.replaceHonorNum('dg') === 'd1').toBe(true);
+})
+
+test ('replaceHonorNum check 2', () => {
+    expect(E.replaceHonorNum('we') === 'w2').toBe(true);
 })
 
 test ('handTiles check', () =>  {

@@ -41,14 +41,24 @@ function hasMeld(suitGroup) {
     // console.log('suitGroup: ', suitGroup);
     const remainder = suitGroup.length % 3;
     if (remainder == 1) return; // no valid options if remainder is 1
-    if (remainder == 2) return hasMeldAndPair(suitGroup);
+    if (remainder == 2) return hasMeldsAndPair(suitGroup);
     if (remainder == 0) return validMelds(suitGroup);
 }
 
-function hasMeldAndPair(suitGroup) {
-    //todo
-    validMelds(suitGroup);
-    return true;
+function hasMeldsAndPair(suitGroup) {
+    // same problem with validMelds.. just put the first and see if validMelds works
+    // input has n*3 with 2 remainder, shove the first n*3 into validMelds
+    console.log(suitGroup);
+    const meldableLength = suitGroup.length - 2;
+    const melds = validMelds(suitGroup.slice(0, meldableLength));
+    console.log(suitGroup.slice(0, meldableLength));
+    console.log(melds);
+    const pair = suitGroup.slice(meldableLength, suitGroup.length);
+    console.log(pair);
+    console.log(melds);
+    melds.push(isPair(pair) && pair);
+    console.log(melds);
+    return melds;
 }
 
 function validMelds(suitGroup) {
@@ -79,6 +89,12 @@ function isTriple(subTile) {
     return numbers[0] === numbers[1] && numbers[1] === numbers[2]
 }
 
+function isPair(subTile) {
+    if (subTile.length != 2) return false;
+    const numbers = getNumbers(subTile);
+    return numbers[0] === numbers[1]
+}
+
 function inputIsTiles(input) {
     if(!Array.isArray(input)) return false;
     return input.every((tile) => validTile(tile));
@@ -86,6 +102,7 @@ function inputIsTiles(input) {
 
 function getNumbers(subTile) {
     let numbers = []
+    // honor numbers could be dgr, nesw 
     if (!subTile.every((tile) => tile.length === 2)) return;
     subTile.forEach((tile) => numbers.push(parseInt(tile.charAt(1))));
     return numbers;
@@ -130,17 +147,31 @@ function tileOrder (tileA, tileB) {
     return tileC < tileD ? -1 : 1;
 }
 
+function replaceHonorNum(tile) {
+    if (tile.length != 2) return;
+    const dragons = {d:1, r:2, w:3}
+    const winds = {n:1, e:2, s:3, w:4}
+    const suit = tile.charAt(0)
+    const honorNum = tile.charAt(1)
+    if (suit === 'd') return `d${dragons[honorNum]}`
+    if (suit === 'w') return `w${winds[honorNum]}`
+    return;
+}
+
 function handTiles (handStr) {
     if (handStr.length != 28) return false;
+
     const tiles = [];
     for (let i = 0; i < handStr.length; i+=2) {
-        tiles.push(handStr.slice(i, i + 2).toLowerCase());
+        let tile = handStr.slice(i, i + 2).toLowerCase()
+        tile = replaceHonorNum(tile);
+        tiles.push(tile);
       }
     tiles.sort((tileA, tileB) => tileOrder(tileA, tileB))
     return tiles;
 }
 
-module.exports = {validTile, allValidTiles, validLength, suitGroups, hasMeld, hasMeldAndPair, 
-    validMelds, validMeld, isStraight, isTriple, getNumbers, getSuits, validSuit, validPair, riichi, tileOrder, handTiles,
-    inputIsTiles,
+module.exports = {validTile, allValidTiles, validLength, suitGroups, hasMeld, hasMeldAndPair: hasMeldsAndPair, 
+    validMelds, validMeld, isStraight, isTriple, isPair, getNumbers, getSuits, validSuit, validPair, riichi,
+    replaceHonorNum, tileOrder, handTiles,inputIsTiles,
 }
