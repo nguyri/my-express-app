@@ -55,6 +55,7 @@ test ('suitGroups check', () => {
     console.log(result);
     expect(areNestedArraysEqual(expected, result)).toBe(true);
 });
+
 test ('hasMeld single check', () => {
     const singleSuitGroup = ['b1','b2','b3'];
     const result = E.hasMeld(singleSuitGroup);

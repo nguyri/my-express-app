@@ -59,7 +59,7 @@ function validMelds(suitGroup) {
         melds.push(suitGroup.slice(i, i + 3));
     }
     console.log('validMelds: ', melds);
-    return melds.forEach(meld => validMeld(meld));
+    return melds.map(meld => validMeld(meld) && meld);
 }
 
 function validMeld(subTile) {
