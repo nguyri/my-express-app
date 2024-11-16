@@ -139,13 +139,12 @@ function validPair(subTile) {
 }
 
 function countMelds(melds) {
-    //melds output is an array of meld arrays. So access the first array and then count the number of arrays in there
+    //melds output is an array of meld arrays. 1 flatten gets rid of the melds groups
     let count = 0;
-    melds.forEach((suitGroup) => 
-        suitGroup.forEach((meldGroup) => {
-            meldGroup.forEach((meld) => {
-                if(meld.length === 3) count++;
-            })}));
+    melds = melds.flat(1);
+    melds.forEach((meld) => {
+        if(meld.length === 3) count++;
+    });
     return count;
 }
 

@@ -162,7 +162,8 @@ test ('countMelds hand check', () => {
     const melds =  [[['b1','b2','b3']],[['c1','c2','c3']], [['m1','m2','m3']], 
     [['d1','d1','d1'],['d2','d2']]];
     const result = E.countMelds(melds);
-    expect(result).toBe(true);
+    console.log(result);
+    expect(result === 4).toBe(true);
 })
 
 
