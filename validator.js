@@ -148,6 +148,16 @@ function countMelds(melds) {
     return count;
 }
 
+function countPairs(melds) {
+    //melds output is an array of meld arrays. 1 flatten gets rid of the melds groups
+    let count = 0;
+    melds = melds.flat(1);
+    melds.forEach((meld) => {
+        if(meld.length === 2) count++;
+    });
+    return count;
+}
+
 function riichi (handStr) {
     const tiles = handTiles(handStr)
     const suits = suitGroups(tiles);
@@ -156,7 +166,7 @@ function riichi (handStr) {
     console.log('melds: ', melds);
     // validPair needs to be run on a subset of tiles
 
-    if (melds && melds.length === 4 && validPair(tiles)) return true;
+    if (melds && countMelds(melds) === 4 && countPairs(melds) === 1) return true;
     return false;
 }
   // useful functions for setting up and checking hands.
@@ -197,5 +207,5 @@ function handTiles (handStr) {
 
 module.exports = {validTile, allValidTiles, validLength, suitGroups, hasMeld, hasMeldsAndPair, 
     validMelds, validMeld, isStraight, isTriple, isPair, getNumbers, getSuits, validSuit, validPair, riichi,
-    replaceHonorNum, tileOrder, handTiles,inputIsTiles, countMelds,
+    replaceHonorNum, tileOrder, handTiles,inputIsTiles, countMelds, countPairs
 }

@@ -153,9 +153,9 @@ test ('validPair check', () => {
 })
 
 test ('countMelds check', () => {
-    const melds =  [['b1','b2','b3'],['c1','c2','c3']];
+    const melds =  [[['b1','b2','b3']],[['c1','c2','c3']]];
     const result = E.countMelds(melds);
-    expect(result).toBe(true);
+    expect(result === 2).toBe(true);
 })
 
 test ('countMelds hand check', () => {
@@ -166,8 +166,15 @@ test ('countMelds hand check', () => {
     expect(result === 4).toBe(true);
 })
 
+test ('countPairs hand check', () => {
+    const melds =  [[['b1','b2','b3']],[['c1','c2','c3']], [['m1','m2','m3']], 
+    [['d1','d1','d1'],['d2','d2']]];
+    const result = E.countPairs(melds);
+    console.log(result);
+    expect(result === 1).toBe(true);
+})
 
-test.only ('riichi check', () => {
+test ('riichi check', () => {
     const str = 'b1b2b3c1c2c3m1m2m3dgdgdgdrdr';
     expect(E.riichi(str)).toBe(true);
 })
