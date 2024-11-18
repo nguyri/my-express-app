@@ -114,6 +114,16 @@ test ('isStraight check', () => {
     expect(E.isStraight(input)).toBe(true);
 })
 
+test ('isStraight check 2', () => {
+    const input = [1,2,3]
+    expect(E.isStraight(input)).toBe(true);
+})
+
+test ('isStraight dragon check', () => {
+    const input = ['d1','d2','d3']
+    expect(E.isStraight(input)).toBe(false);
+})
+
 test ('isTriple check', () => {
     const input = ['b1','b1','b1']
     expect(E.isTriple(input)).toBe(true);
@@ -123,6 +133,15 @@ test ('isPair check', () => {
     const input = ['b1','b1']
     expect(E.isPair(input)).toBe(true);
 })
+
+test ('isHonor check', () => {
+    expect(E.isHonor('dg')).toBe(true);
+})
+
+test ('isHonor false check', () => {
+    expect(E.isHonor('b1')).toBe(false);
+})
+
 
 test ('inputIsTiles check', () => {
     const input = ['b1','b2','b3'];

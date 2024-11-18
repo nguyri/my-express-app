@@ -84,20 +84,33 @@ function validMeld(subTile) {
 function isStraight(subTile) {
     // subTile is ordered
     if (subTile.length != 3) return false;
-    const numbers = getNumbers(subTile);
+    let numbers = subTile;
+    if(isNaN(subTile[0]))
+        numbers = getNumbers(subTile);
+    if(isHonor(subTile[0]))
+        return false;
     return numbers[0] + 2 === numbers[1] + 1 && numbers[1] + 1 === numbers[2]
 }
 
 function isTriple(subTile) {
     if (subTile.length != 3) return false;
-    const numbers = getNumbers(subTile);
+    let numbers = subTile;
+    if(isNaN(subTile[0]))
+        numbers = getNumbers(subTile);
     return numbers[0] === numbers[1] && numbers[1] === numbers[2]
 }
 
 function isPair(subTile) {
     if (subTile.length != 2) return false;
-    const numbers = getNumbers(subTile);
+    let numbers = subTile;
+    if(isNaN(subTile[0]))
+        numbers = getNumbers(subTile);
     return numbers[0] === numbers[1]
+}
+
+function isHonor(tile) {
+    if (tile.length != 2) return false;
+    return tile.charAt(0) === 'd' || tile.charAt(0) === 'w'
 }
 
 function inputIsTiles(input) {
@@ -217,5 +230,5 @@ function handTiles (handStr) {
 
 module.exports = {validTile, allValidTiles, validLength, suitGroups, hasMeld, hasMeldsAndPair, 
     validMelds, validMeld, isStraight, isTriple, isPair, getNumbers, getSuits, validSuit, validPair, riichi,
-    replaceHonorNum, tileOrder, handTiles,inputIsTiles, countMelds, countPairs, numberTiles
+    replaceHonorNum, tileOrder, handTiles,inputIsTiles, countMelds, countPairs, numberTiles, isHonor
 }
