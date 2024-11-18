@@ -42,15 +42,15 @@ function suitGroups(tiles) {
     return suits;
 }
 
-function hasMeld(suitGroup) {
+function getMelds(suitGroup) {
     // console.log('suitGroup: ', suitGroup);
     const remainder = suitGroup.length % 3;
     if (remainder == 1) return; // no valid options if remainder is 1
-    if (remainder == 2) return hasMeldsAndPair(suitGroup);
+    if (remainder == 2) return getMeldsAndPair(suitGroup);
     if (remainder == 0) return validMelds(suitGroup);
 }
 
-function hasMeldsAndPair(suitGroup) {
+function getMeldsAndPair(suitGroup) {
     // same problem with validMelds.. just put the first and see if validMelds works
     // input has n*3 with 2 remainder, shove the first n*3 into validMelds
     console.log(suitGroup);
@@ -175,7 +175,7 @@ function riichi (handStr) {
     const tiles = handTiles(handStr)
     const suits = suitGroups(tiles);
     console.log('suits: ', suits)
-    const melds = suits.map((suit) => hasMeld(suit))
+    const melds = suits.map((suit) => getMelds(suit))
     console.log('melds: ', melds);
     // validPair needs to be run on a subset of tiles
 
@@ -228,7 +228,7 @@ function handTiles (handStr) {
     return tiles;
 }
 
-module.exports = {validTile, allValidTiles, validLength, suitGroups, hasMeld, hasMeldsAndPair, 
+module.exports = {validTile, allValidTiles, validLength, suitGroups, hasMeld: getMelds, hasMeldsAndPair: getMeldsAndPair, 
     validMelds, validMeld, isStraight, isTriple, isPair, getNumbers, getSuits, validSuit, validPair, riichi,
     replaceHonorNum, tileOrder, handTiles,inputIsTiles, countMelds, countPairs, numberTiles, isHonor
 }
