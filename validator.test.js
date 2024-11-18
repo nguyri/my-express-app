@@ -96,7 +96,7 @@ test ('getMeldsAndPair check 2', () => {
     expect(areNestedArraysEqual(singleExpected, result)).toBe(true);
 })
 
-test.only ('getMeldsAndPair check 3', () => {
+test ('getMeldsAndPair check 3', () => {
     const singleSuitGroup = ['d1','d1','d2', 'd2', 'd2'];
     const result = E.getMeldsAndPair(singleSuitGroup);
     const singleExpected = [['d2','d2','d2'],['d1','d1']];
@@ -248,6 +248,16 @@ test ('riichi check', () => {
 
 test ('riichi check 2', () => {
     const str = 'b1b2b3c1c2c3m1m2m3dgdgdgdrdr';
+    expect(E.riichi(str)).toBe(true);
+})
+
+test ('riichi check 3', () => {
+    const str = 'b1b2b3m1m2m3c1c2c3dgdgdgb1b1';
+    expect(E.riichi(str)).toBe(true);
+})
+
+test.only ('riichi check 4', () => {
+    const str = 'b1b2b3m1m2m3c1c2c3dgdgdgb1b1';
     expect(E.riichi(str)).toBe(true);
 })
 

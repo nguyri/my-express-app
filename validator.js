@@ -56,7 +56,7 @@ function getMeldsAndPair(suitGroup) {
     // only the first number is needed to identify a pair
     const uniquePairs = [...new Set(pairs.map(pair => pair[0]))];
     // console.log('uniquePairs:', uniquePairs);
-    
+
     const meldset = []
     uniquePairs.forEach((pair) => {
         let removedCount = 0;
@@ -201,6 +201,7 @@ function countPairs(melds) {
 
 function riichi (handStr) {
     const tiles = handTiles(handStr)
+    console.log('tiles: ', tiles);
     const suits = suitGroups(tiles);
     console.log('suits: ', suits)
     const melds = suits.map((suit) => getMelds(suit))
