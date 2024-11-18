@@ -56,19 +56,19 @@ test ('suitGroups check', () => {
     expect(areNestedArraysEqual(expected, result)).toBe(true);
 });
 
-test ('hasMeld single check', () => {
+test ('getMelds single check', () => {
     const singleSuitGroup = ['b1','b2','b3'];
-    const result = E.hasMeld(singleSuitGroup);
+    const result = E.getMelds(singleSuitGroup);
     const singleExpected = [['b1','b2','b3']];
     console.log('In test single:', result);
     expect(areNestedArraysEqual(singleExpected, result)).toBe(true);
 })
 
-test ('hasMeld hand check', () => {
+test ('getMelds hand check', () => {
     const tiles = E.handTiles('b1b2b3c1c2c3m1m2m3dgdgdgdrdr');
     const suitGroups = E.suitGroups(tiles);
     console.log('In test:', suitGroups);
-    const meldResults = suitGroups.map((group) => (E.hasMeld(group)));
+    const meldResults = suitGroups.map((group) => (E.getMelds(group)));
     const expected = [
         [['b1','b2','b3']],
         [['c1','c2','c3']],
@@ -80,9 +80,9 @@ test ('hasMeld hand check', () => {
     expect(areNestedArraysEqual(expected, meldResults)).toBe(true);
 })
 
-test ('hasMeldsAndPair check', () => {
+test ('getMeldsAndPair check', () => {
     const singleSuitGroup = ['d1','d1','d1', 'd2', 'd2'];
-    const result = E.hasMeldsAndPair(singleSuitGroup);
+    const result = E.getMeldsAndPair(singleSuitGroup);
     const singleExpected = [['d1','d1','d1'],['d2','d2']];
     console.log('In test single:', result);
     expect(areNestedArraysEqual(singleExpected, result)).toBe(true);
@@ -109,18 +109,20 @@ test ('validMeld check 3', () => {
     expect(result).toBe(true);
 })
 
-test.only ('getMelds check', () => {
+test ('getMelds check', () => {
     const singleSuitGroup = ['d1','d1','d1','d2','d2'];
     const result = E.getMelds(singleSuitGroup);
-    console.log(result);
-    expect(result).toBe(true);
+    const expected = [ [ 'd1', 'd1', 'd1' ], [ 'd2', 'd2' ] ];
+    // console.log(result);
+    expect(areNestedArraysEqual(result,expected)).toBe(true);
 })
 
-test.only ('getMelds check 2', () => {
+test ('getMelds check 2', () => {
     const singleSuitGroup = ['d2','d2','d2','d1','d1'];
+    const expected = [ [ 'd2', 'd2','d2' ], [ 'd1', 'd1' ] ];
     const result = E.getMelds(singleSuitGroup);
     console.log(result);
-    expect(result).toBe(true);
+    expect(areNestedArraysEqual(result,expected)).toBe(true);
 })
 
 

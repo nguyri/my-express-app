@@ -228,7 +228,7 @@ function handTiles (handStr) {
     return tiles;
 }
 
-module.exports = {validTile, allValidTiles, validLength, suitGroups, hasMeld: getMelds, hasMeldsAndPair: getMeldsAndPair, 
+module.exports = {validTile, allValidTiles, validLength, suitGroups, getMelds, getMeldsAndPair, 
     validMelds, validMeld, isStraight, isTriple, isPair, getNumbers, getSuits, validSuit, validPair, riichi,
     replaceHonorNum, tileOrder, handTiles,inputIsTiles, countMelds, countPairs, numberTiles, isHonor
 }
