@@ -195,6 +195,13 @@ test ('replaceHonorNum check 2', () => {
     expect( result === 'w2').toBe(true);
 })
 
+test ('numberTiles check', () => {
+    const itm = E.handTiles('b1b2b3c1c2c3m1m2m3dgdgdgdrdr');
+    const result = E.numberTiles(itm);
+    const expected = [1,2,3,11,12,13,21,22,23,31,31,31,32,32]
+    expect( areNestedArraysEqual(result, expected)).toBe(true);
+})
+
 test ('handTiles check', () =>  {
     const str = 'b1b2b3c1c2c3m1m2m3dgdgdgdrdr';
     const expected = ['b1','b2','b3','c1','c2','c3','m1','m2','m3','d1','d1','d1','d2','d2'];

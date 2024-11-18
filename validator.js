@@ -106,8 +106,8 @@ function inputIsTiles(input) {
 }
 
 function getNumbers(subTile) {
+    // does not work for dg, dr, nesw format tiles, use handTiles (automatically returns d1) or replaceHonorNums
     let numbers = []
-    // honor numbers could be dgr, nesw 
     if (!subTile.every((tile) => tile.length === 2)) return;
     subTile.forEach((tile) => numbers.push(parseInt(tile.charAt(1))));
     return numbers;
@@ -192,6 +192,16 @@ function replaceHonorNum(tile) {
     return;
 }
 
+function numberTiles(tiles) {
+    // accepts ['b1','b2','c1'...', 'dg'] or [..'d1'] format tiles 
+    // returns [1,2,10...]. 1-9 bamboo, 11-19 circle, 21-29 man, 31-33 dragon, 41-44 wind
+    const faceValue = {b:0, c:10, m:20, d:30, w:40}
+    const numberTiles = tiles.map((tile) => {
+        return faceValue[tile.charAt(0)] + parseInt(tile.charAt(1));
+    })
+    return numberTiles;
+}
+
 function handTiles (handStr) {
     if (handStr.length != 28) return false;
 
@@ -207,5 +217,5 @@ function handTiles (handStr) {
 
 module.exports = {validTile, allValidTiles, validLength, suitGroups, hasMeld, hasMeldsAndPair, 
     validMelds, validMeld, isStraight, isTriple, isPair, getNumbers, getSuits, validSuit, validPair, riichi,
-    replaceHonorNum, tileOrder, handTiles,inputIsTiles, countMelds, countPairs
+    replaceHonorNum, tileOrder, handTiles,inputIsTiles, countMelds, countPairs, numberTiles
 }
