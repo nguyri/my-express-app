@@ -96,18 +96,33 @@ test ('validMelds check', () => {
     expect(areNestedArraysEqual(singleExpected, result)).toBe(true);
 })
 
-test ('validMeld check', () => {
+test ('validMeld check 2', () => {
     const singleSuitGroup = ['b1','b2','b3'];
     const result = E.validMeld(singleSuitGroup);
     expect(result).toBe(true);
 })
 
 
-test ('validMeld check 2', () => {
+test ('validMeld check 3', () => {
     const singleSuitGroup = ['d1','d1','d1'];
     const result = E.validMeld(singleSuitGroup);
     expect(result).toBe(true);
 })
+
+test.only ('getMelds check', () => {
+    const singleSuitGroup = ['d1','d1','d1','d2','d2'];
+    const result = E.getMelds(singleSuitGroup);
+    console.log(result);
+    expect(result).toBe(true);
+})
+
+test.only ('getMelds check 2', () => {
+    const singleSuitGroup = ['d2','d2','d2','d1','d1'];
+    const result = E.getMelds(singleSuitGroup);
+    console.log(result);
+    expect(result).toBe(true);
+})
+
 
 test ('isStraight check', () => {
     const input = ['b1','b2','b3']
@@ -185,6 +200,14 @@ test ('countMelds hand check', () => {
     expect(result === 4).toBe(true);
 })
 
+test ('countMelds hand check 2', () => {
+    const melds =  [[['b1','b2','b3']],[['c1','c2','c3']], [['m1','m2','m3']], 
+    [['d2','d2','d2'],['d1','d1']]];
+    const result = E.countMelds(melds);
+    console.log(result);
+    expect(result === 4).toBe(true);
+})
+
 test ('countPairs hand check', () => {
     const melds =  [[['b1','b2','b3']],[['c1','c2','c3']], [['m1','m2','m3']], 
     [['d1','d1','d1'],['d2','d2']]];
@@ -193,7 +216,12 @@ test ('countPairs hand check', () => {
     expect(result === 1).toBe(true);
 })
 
-test ('riichi check', () => {
+test.only ('riichi check', () => {
+    const str = 'b1b2b3c1c2c3m1m2m3drdrdrdgdg';
+    expect(E.riichi(str)).toBe(true);
+})
+
+test ('riichi check 2', () => {
     const str = 'b1b2b3c1c2c3m1m2m3dgdgdgdrdr';
     expect(E.riichi(str)).toBe(true);
 })
