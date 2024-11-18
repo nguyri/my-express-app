@@ -256,8 +256,13 @@ test ('riichi check 3', () => {
     expect(E.riichi(str)).toBe(true);
 })
 
-test.only ('riichi check 4', () => {
+test ('riichi straight pair overlap', () => {
     const str = 'b1b2b3m1m2m3c1c2c3dgdgdgb1b1';
+    expect(E.riichi(str)).toBe(true);
+})
+
+test ('riichi check 2 straights overlap', () => {
+    const str = 'b1b2b3b2b3b4m1m2m3m4m5m6dgdg';
     expect(E.riichi(str)).toBe(true);
 })
 
