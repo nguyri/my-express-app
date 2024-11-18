@@ -88,6 +88,22 @@ test ('getMeldsAndPair check', () => {
     expect(areNestedArraysEqual(singleExpected, result)).toBe(true);
 })
 
+test ('getMeldsAndPair check 2', () => {
+    const singleSuitGroup = ['d2','d2','d2', 'd1', 'd1'];
+    const result = E.getMeldsAndPair(singleSuitGroup);
+    const singleExpected = [['d2','d2','d2'],['d1','d1']];
+    console.log('In test single:', result);
+    expect(areNestedArraysEqual(singleExpected, result)).toBe(true);
+})
+
+test.only ('getMeldsAndPair check 3', () => {
+    const singleSuitGroup = ['d1','d1','d2', 'd2', 'd2'];
+    const result = E.getMeldsAndPair(singleSuitGroup);
+    const singleExpected = [['d2','d2','d2'],['d1','d1']];
+    console.log('In test single:', result);
+    expect(areNestedArraysEqual(singleExpected, result)).toBe(true);
+})
+
 test ('validMelds check', () => {
     const singleSuitGroup = ['b1','b2','b3'];
     const result = E.validMelds(singleSuitGroup);
@@ -179,6 +195,13 @@ test ('getSuits check', () => {
     expect(areNestedArraysEqual(result,input)).toBe(true);
 })
 
+test ('getCombinations check', () => {
+    const input = ['b1','b2','b3','b4'];
+    const expected = [ [ 'b1', 'b2', 'b3' ], [ 'b1', 'b2', 'b4' ], [ 'b1', 'b3', 'b4' ], [ 'b2', 'b3', 'b4' ] ]
+    const result = E.getCombinations(input, 3);
+    expect(areNestedArraysEqual(result, expected)).toBe(true);
+})
+
 test ('validSuit check', () => {
     expect(E.validSuit('b1')).toBe(true);
 })
@@ -218,7 +241,7 @@ test ('countPairs hand check', () => {
     expect(result === 1).toBe(true);
 })
 
-test.only ('riichi check', () => {
+test ('riichi check', () => {
     const str = 'b1b2b3c1c2c3m1m2m3drdrdrdgdg';
     expect(E.riichi(str)).toBe(true);
 })

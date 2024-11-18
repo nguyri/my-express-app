@@ -51,19 +51,28 @@ function getMelds(suitGroup) {
 }
 
 function getMeldsAndPair(suitGroup) {
-    // same problem with validMelds.. just put the first and see if validMelds works
-    // input has n*3 with 2 remainder, shove the first n*3 into validMelds
-    console.log(suitGroup);
-    const meldableLength = suitGroup.length - 2;
-    const melds = validMelds(suitGroup.slice(0, meldableLength));
-    console.log(suitGroup.slice(0, meldableLength));
-    console.log(melds);
-    const pair = suitGroup.slice(meldableLength, suitGroup.length);
-    console.log(pair);
-    console.log(melds);
-    melds.push(isPair(pair) && pair);
-    console.log(melds);
-    return melds;
+    // find pairs. For each that exist, put the rest of the tiles into validMelds
+    const pairs = getCombinations(suitGroup, 2).filter((combi) => isPair(combi));
+    // only the first number is needed to identify a pair
+    const uniquePairs = [...new Set(pairs.map(pair => pair[0]))];
+    // console.log('uniquePairs:', uniquePairs);
+    
+    const meldset = []
+    uniquePairs.forEach((pair) => {
+        let removedCount = 0;
+        const pairless = suitGroup.filter(item => {
+            if(item === pair && removedCount < 2) { 
+                removedCount++;
+                return false;
+            } 
+            return true;
+        })
+        // for now melds has this pattern.. [[d1,d1,d1],[d2,d2]]
+        meldset.push([...validMelds(pairless), [pair, pair]]);
+    })
+    // console.log('meldset', meldset);
+    meldset.sort((meldsetA, meldsetB) => meldsetA.flat(5).length > meldsetB.flat(5).length ? -1: 1);
+    return meldset[0];
 }
 
 function validMelds(suitGroup) {
@@ -138,6 +147,25 @@ function getSuits(groups) {
             suits.push(tile.charAt(0));
     });
     return suits;
+}
+
+function getCombinations(suitGroup, size) {
+    const result = [];
+
+    function combine(start, combination) {
+        if (combination.length === size) {
+            result.push([...combination]);
+            return;
+        }
+        for (let i = start; i < suitGroup.length; i++) {
+            combination.push(suitGroup[i]);
+            combine(i + 1, combination);
+            combination.pop();
+        }
+    }
+
+    combine(0,[]);
+    return result;
 }
 
 function validSuit(tile) {
@@ -230,5 +258,6 @@ function handTiles (handStr) {
 
 module.exports = {validTile, allValidTiles, validLength, suitGroups, getMelds, getMeldsAndPair, 
     validMelds, validMeld, isStraight, isTriple, isPair, getNumbers, getSuits, validSuit, validPair, riichi,
-    replaceHonorNum, tileOrder, handTiles,inputIsTiles, countMelds, countPairs, numberTiles, isHonor
+    replaceHonorNum, tileOrder, handTiles,inputIsTiles, countMelds, countPairs, numberTiles, isHonor, getCombinations,
+
 }
