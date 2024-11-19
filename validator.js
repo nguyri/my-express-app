@@ -69,7 +69,7 @@ function getMeldsAndPair(suitGroup) {
             return true; // keep this tile
         })
         // for now melds has this pattern.. [[d1,d1,d1],[d2,d2]]
-        console.log(pairless)
+        console.log('pairless:', pairless)
         meldset.push([...validMelds(pairless), [pair, pair]]);
     })
     console.log('meldset', meldset);
@@ -116,7 +116,7 @@ function validMelds(suitGroup) {
     // console.log('possibleMeldSets: ', possibleMeldSets);
     // console.log('confirmedMeldSets: ', confirmedMeldSets);
     // console.log('orderedMeldSets', orderedMeldSets)
-    return orderedMeldSets[0];
+    return orderedMeldSets[0] ? orderedMeldSets[0] : [];
 }
 
 function validMeld(subTile) {
