@@ -75,15 +75,45 @@ function getMeldsAndPair(suitGroup) {
     return meldset[0];
 }
 
+function confirmMelds(suitGroup, meldSet) {
+    meldSet = meldSet.flat();
+    suitGroup = suitGroup.flat();
+    console.log('meldset: ', meldSet);
+    console.log('suitgroup: ', suitGroup);
+    const result = [...suitGroup] 
+    meldSet.forEach((tile) => {
+        const index = result.indexOf(tile);
+        if (index !== -1) {
+            result.splice(index, 1); // remove 1 instance of tile
+        } else return false;
+    })
+    return true;
+}
+
 function validMelds(suitGroup) {
-    // input should be matching suits divisible by 3
-    // naively pick the first set for now
-    let melds = []
-    for(let i = 0; i < suitGroup.length / 3; i++) {
-        melds.push(suitGroup.slice(i, i + 3));
-    }
-    console.log('validMelds: ', melds);
-    return melds.map(meld => validMeld(meld) && meld);
+    // make a list of all possible straights and triples
+    // make all combinations of melds up to the max amount possible
+    // check each combination and return the first (for now) largest combination
+    const straights = getCombinations(suitGroup, 3).filter((combi) => isStraight(combi));
+    const triples = getCombinations(suitGroup, 3).filter((combi) => isTriple(combi));
+    const uniqueStraights = straights.filter((value, index, self) => 
+        index === self.findIndex((t) => JSON.stringify(t) === JSON.stringify(value)));
+    const uniqueTriples = triples.filter((value, index, self) => 
+        index === self.findIndex((t) => JSON.stringify(t) === JSON.stringify(value)));
+    const possibleMelds = [...uniqueStraights, ...uniqueTriples];
+
+    console.log('straights: ', uniqueStraights)
+    console.log('triples: ', uniqueTriples)
+    console.log('possibleMelds:', possibleMelds)
+    
+    const maxMelds = suitGroup.length / 3; // max melds possible
+    const possibleMeldSets = getAllCombinations(possibleMelds, maxMelds);
+    const confirmedMeldSets = possibleMeldSets.filter((meldset) => confirmMelds(suitGroup, meldset))
+    const orderedMeldSets = confirmedMeldSets.sort((msA, msB) => msA.length < msB.length ? 1: -1);
+    console.log('possibleMeldSets: ', possibleMeldSets);
+    console.log('confirmedMeldSets: ', confirmedMeldSets);
+    console.log('orderedMeldSets', orderedMeldSets)
+    return orderedMeldSets[0];
 }
 
 function validMeld(subTile) {
@@ -166,6 +196,14 @@ function getCombinations(suitGroup, size) {
 
     combine(0,[]);
     return result;
+}
+
+function getAllCombinations(suitGroup, maxSize) {
+    const allCombinations = [];
+    for(let size = 1; size <= maxSize; size++) {
+        allCombinations.push(...getCombinations(suitGroup, size));
+    }
+    return allCombinations;
 }
 
 function validSuit(tile) {
@@ -260,5 +298,6 @@ function handTiles (handStr) {
 module.exports = {validTile, allValidTiles, validLength, suitGroups, getMelds, getMeldsAndPair, 
     validMelds, validMeld, isStraight, isTriple, isPair, getNumbers, getSuits, validSuit, validPair, riichi,
     replaceHonorNum, tileOrder, handTiles,inputIsTiles, countMelds, countPairs, numberTiles, isHonor, getCombinations,
+    getAllCombinations, confirmMelds,
 
 }

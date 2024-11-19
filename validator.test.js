@@ -112,6 +112,14 @@ test ('validMelds check', () => {
     expect(areNestedArraysEqual(singleExpected, result)).toBe(true);
 })
 
+test.only ('validMelds check', () => {
+    const singleSuitGroup = ['b1','b2','b3','b2','b3','b4'];
+    const result = E.validMelds(singleSuitGroup);
+    const singleExpected = [['b1','b2','b3'],['b2','b3','b4']];
+    // console.log(':', result);
+    expect(areNestedArraysEqual(singleExpected, result)).toBe(true);
+})
+
 test ('validMeld check 2', () => {
     const singleSuitGroup = ['b1','b2','b3'];
     const result = E.validMeld(singleSuitGroup);
@@ -202,6 +210,29 @@ test ('getCombinations check', () => {
     expect(areNestedArraysEqual(result, expected)).toBe(true);
 })
 
+test ('getCombinations check', () => {
+    const input = ['b1s','b2s'];
+    const expected = [['b1s'],['b2s']]
+    const result = E.getCombinations(input, 1);
+    console.log(result);
+    expect(areNestedArraysEqual(result, expected)).toBe(true);
+})
+
+test ('getAllCombinations check', () => {
+    const input = ['b1s','b2s'];
+    const expected = [['b1s'],['b2s'], ['b1s','b2s']];
+    const result = E.getAllCombinations(input, 2);
+    console.log(result);
+    expect(areNestedArraysEqual(result, expected)).toBe(true);
+})
+
+test ('getAllCombinations check', () => {
+    const input = ['b1','b2','b3'];
+    const expected = [ ['b1'], ['b2'], ['b3'], ['b1', 'b2'], ['b1', 'b3'], 
+        ['b2', 'b3'], ['b1', 'b2', 'b3'] ];
+    const result = E.getAllCombinations(input, 3);
+})
+
 test ('validSuit check', () => {
     expect(E.validSuit('b1')).toBe(true);
 })
@@ -261,9 +292,22 @@ test ('riichi straight pair overlap', () => {
     expect(E.riichi(str)).toBe(true);
 })
 
-test ('riichi check 2 straights overlap', () => {
+test.only ('riichi check 2 straights overlap', () => {
+    const str = 'b1b2b3b2b3b4m1m2m3c1c2c3dgdg';
+    expect(E.riichi(str)).toBe(true);
+})
+
+test ('riichi check 2 straights 2 suits', () => {
     const str = 'b1b2b3b2b3b4m1m2m3m4m5m6dgdg';
     expect(E.riichi(str)).toBe(true);
+})
+
+test ('confirmMelds check', () => {
+    const suitGroup = [ 'b1', 'b2', 'b2', 'b3', 'b3', 'b4' ];
+    const melds = [ [ 'b1', 'b2', 'b3' ], [ 'b2', 'b3', 'b4' ] ];
+    const result = E.confirmMelds(suitGroup, melds);
+    const expected = true;
+    expect(result === expected).toBe(true);
 })
 
 test ('tileOrder check', () => {
