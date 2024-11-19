@@ -55,22 +55,24 @@ function getMeldsAndPair(suitGroup) {
     const pairs = getCombinations(suitGroup, 2).filter((combi) => isPair(combi));
     // only the first number is needed to identify a pair
     const uniquePairs = [...new Set(pairs.map(pair => pair[0]))];
-    // console.log('uniquePairs:', uniquePairs);
+    console.log('uniquePairs:', uniquePairs);
 
     const meldset = []
+    console.log('meldset', meldset);
     uniquePairs.forEach((pair) => {
         let removedCount = 0;
         const pairless = suitGroup.filter(item => {
             if(item === pair && removedCount < 2) { 
                 removedCount++;
-                return false;
+                return false; // ignore this tile that matches pair
             } 
-            return true;
+            return true; // keep this tile
         })
         // for now melds has this pattern.. [[d1,d1,d1],[d2,d2]]
+        console.log(pairless)
         meldset.push([...validMelds(pairless), [pair, pair]]);
     })
-    // console.log('meldset', meldset);
+    console.log('meldset', meldset);
     meldset.sort((meldsetA, meldsetB) => meldsetA.flat(5).length > meldsetB.flat(5).length ? -1: 1);
     return meldset[0];
 }
@@ -94,6 +96,7 @@ function validMelds(suitGroup) {
     // make a list of all possible straights and triples
     // make all combinations of melds up to the max amount possible
     // check each combination and return the first (for now) largest combination
+    if(suitGroup.length === 0 ) return [];
     const straights = getCombinations(suitGroup, 3).filter((combi) => isStraight(combi));
     const triples = getCombinations(suitGroup, 3).filter((combi) => isTriple(combi));
     const uniqueStraights = straights.filter((value, index, self) => 
@@ -102,17 +105,17 @@ function validMelds(suitGroup) {
         index === self.findIndex((t) => JSON.stringify(t) === JSON.stringify(value)));
     const possibleMelds = [...uniqueStraights, ...uniqueTriples];
 
-    console.log('straights: ', uniqueStraights)
-    console.log('triples: ', uniqueTriples)
-    console.log('possibleMelds:', possibleMelds)
-    
+    // console.log('straights: ', uniqueStraights)
+    // console.log('triples: ', uniqueTriples)
+    // console.log('possibleMelds:', possibleMelds)
+
     const maxMelds = suitGroup.length / 3; // max melds possible
     const possibleMeldSets = getAllCombinations(possibleMelds, maxMelds);
     const confirmedMeldSets = possibleMeldSets.filter((meldset) => confirmMelds(suitGroup, meldset))
     const orderedMeldSets = confirmedMeldSets.sort((msA, msB) => msA.length < msB.length ? 1: -1);
-    console.log('possibleMeldSets: ', possibleMeldSets);
-    console.log('confirmedMeldSets: ', confirmedMeldSets);
-    console.log('orderedMeldSets', orderedMeldSets)
+    // console.log('possibleMeldSets: ', possibleMeldSets);
+    // console.log('confirmedMeldSets: ', confirmedMeldSets);
+    // console.log('orderedMeldSets', orderedMeldSets)
     return orderedMeldSets[0];
 }
 

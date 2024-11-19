@@ -112,7 +112,7 @@ test ('validMelds check', () => {
     expect(areNestedArraysEqual(singleExpected, result)).toBe(true);
 })
 
-test.only ('validMelds check', () => {
+test ('validMelds check', () => {
     const singleSuitGroup = ['b1','b2','b3','b2','b3','b4'];
     const result = E.validMelds(singleSuitGroup);
     const singleExpected = [['b1','b2','b3'],['b2','b3','b4']];
@@ -292,7 +292,7 @@ test ('riichi straight pair overlap', () => {
     expect(E.riichi(str)).toBe(true);
 })
 
-test.only ('riichi check 2 straights overlap', () => {
+test ('riichi check 2 straights overlap', () => {
     const str = 'b1b2b3b2b3b4m1m2m3c1c2c3dgdg';
     expect(E.riichi(str)).toBe(true);
 })
