@@ -275,14 +275,26 @@ function replaceHonorNum(tile) {
     return;
 }
 
-function numberTiles(tiles) {
+function numberTile(tile) {
     // accepts ['b1','b2','c1'...', 'dg'] or [..'d1'] format tiles 
     // returns [1,2,10...]. 1-9 bamboo, 11-19 circle, 21-29 man, 31-33 dragon, 41-44 wind
     const faceValue = {b:0, c:10, m:20, d:30, w:40}
-    const numberTiles = tiles.map((tile) => {
-        return faceValue[tile.charAt(0)] + parseInt(tile.charAt(1));
-    })
+    return faceValue[tile.charAt(0)] + parseInt(tile.charAt(1));
+}
+
+function numberTiles(tiles) {
+    const numberTiles = tiles.map((tile) => numberTile(tile))
     return numberTiles;
+}
+
+function tileFromNumber(number) {
+    const suitMapping = {0: 'b', 10: 'c', 20: 'm', 30: 'd', 40: 'w'};
+    const suitValue = Math.floor(number / 10) * 10; 
+    const suit = suitMapping[suitValue];
+
+    const tile = suit + (number % 10);
+    if ( !validTile(tile) ) return false;
+    return tile;
 }
 
 function handTiles (handStr) {
@@ -298,9 +310,34 @@ function handTiles (handStr) {
     return tiles;
 }
 
+function makeMeld(tile, type) {
+    //type 1: straight, type 2: triple, type 3: pair
+    const tileNum = numberTile(tile);
+    if (type === 1) {
+        if ( isHonor(tile) ) return false;
+        return [tile, tileFromNumber(tileNum + 1), tileFromNumber(tileNum + 2)]; 
+    }
+    if (type == 2) return [tile, tile, tile];
+    if (type == 3) return [tile, tile];
+    return false;
+}
+
+function makeHand() {
+    //map available melds and pairs to ints
+    // triples 1-9 bamboo, 11-19 circle, 21-29 man, 31-33 dragon, 41-44 wind
+    // pick  5 tiles for melds
+    const randomNums = []
+    while(randomNums.length < 5) {
+        const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+        const tile = tileFromNumber(randomNum)
+        if ( tile ) randomNums.push(tile);
+    }
+    
+}
+
 module.exports = {validTile, allValidTiles, validLength, suitGroups, getMelds, getMeldsAndPair, 
     validMelds, validMeld, isStraight, isTriple, isPair, getNumbers, getSuits, validSuit, validPair, riichi,
     replaceHonorNum, tileOrder, handTiles,inputIsTiles, countMelds, countPairs, numberTiles, isHonor, getCombinations,
-    getAllCombinations, confirmMelds,
+    getAllCombinations, confirmMelds, makeHand, makeMeld
 
 }

@@ -338,3 +338,34 @@ test ('handTiles check', () =>  {
     const expected = ['b1','b2','b3','c1','c2','c3','m1','m2','m3','d1','d1','d1','d2','d2'];
     expect(areNestedArraysEqual(E.handTiles(str),expected)).toBe(true);
 })
+
+test ('makeMeld check 1', () =>  {
+    const tile = 'b1';
+    const type = 1;
+    const result = E.makeMeld(tile, type);
+    const expected = ['b1','b2','b3'];
+    expect(areNestedArraysEqual(result, expected)).toBe(true);
+})
+
+test ('makeMeld check 2', () =>  {
+    const tile = 'b1';
+    const type = 2;
+    const result = E.makeMeld(tile, type);
+    const expected = ['b1','b1','b1'];
+    expect(areNestedArraysEqual(result, expected)).toBe(true);
+})
+
+test ('makeMeld check 3', () =>  {
+    const tile = 'b1';
+    const type = 3;
+    const result = E.makeMeld(tile, type);
+    const expected = ['b1','b1'];
+    expect(areNestedArraysEqual(result, expected)).toBe(true);
+})
+
+test ('makeMeld check 4', () =>  {
+    const tile = 'dg';
+    const type = 1;
+    const result = E.makeMeld(tile, type);
+    expect(result).toBe(false);
+})
