@@ -241,12 +241,13 @@ function countPairs(melds) {
 }
 
 function riichi (handStr) {
-    const tiles = handTiles(handStr)
-    console.log('tiles: ', tiles);
+    const tiles = Array.isArray(handStr) ? handStr : handTiles(handStr);
     const suits = suitGroups(tiles);
-    console.log('suits: ', suits)
     const melds = suits.map((suit) => getMelds(suit))
-    console.log('melds: ', melds);
+
+    // console.log('tiles: ', tiles);
+    // console.log('suits: ', suits)
+    // console.log('melds: ', melds);
     // validPair needs to be run on a subset of tiles
 
     if (melds && countMelds(melds) === 4 && countPairs(melds) === 1) return true;

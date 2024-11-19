@@ -382,5 +382,15 @@ test ('makeRandomHand check', () => {
     const result = tiles.every((tile) => E.validTile(tile));
     expect(result).toBe(true);
 })
-    
+
+test.only.each(new Array(100).fill(null))('makeRandomHand x100 and riichi check', () => {
+    const tiles = E.makeRandomHand();
+    console.log('tiles', tiles);
+    const result = tiles.every((tile) => E.validTile(tile));
+    expect(result).toBe(true);
+
+    const riichi = E.riichi(tiles);
+    expect(riichi).toBe(true);
+})
+
 })
