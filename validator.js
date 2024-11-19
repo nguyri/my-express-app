@@ -240,7 +240,7 @@ function countPairs(melds) {
     return count;
 }
 
-function riichi (handStr) {
+function riichi (handStr, printMelds) {
     const tiles = Array.isArray(handStr) ? handStr : handTiles(handStr);
     const suits = suitGroups(tiles);
     const melds = suits.map((suit) => getMelds(suit))
@@ -250,6 +250,7 @@ function riichi (handStr) {
     // console.log('melds: ', melds);
     // validPair needs to be run on a subset of tiles
 
+    printMelds && console.log('melds from riichi: ', melds);
     if (melds && countMelds(melds) === 4 && countPairs(melds) === 1) return true;
     return false;
 }
@@ -299,7 +300,9 @@ function tileFromNumber(number) {
 }
 
 function handTiles (handStr) {
-    if (handStr.length != 28) return false;
+    handStr = handStr.replace(/[\s\p{P}]/gu, '')
+    // console.log(handStr);
+    if (handStr.length != 28) { console.error("Hand length was not 28"); return false; } 
 
     const tiles = [];
     for (let i = 0; i < handStr.length; i+=2) {

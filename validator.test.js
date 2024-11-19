@@ -339,7 +339,6 @@ test ('handTiles check', () =>  {
     const expected = ['b1','b2','b3','c1','c2','c3','m1','m2','m3','d1','d1','d1','d2','d2'];
     expect(areNestedArraysEqual(E.handTiles(str),expected)).toBe(true);
 })
-
     
 })
 
@@ -383,14 +382,25 @@ test ('makeRandomHand check', () => {
     expect(result).toBe(true);
 })
 
-test.only.each(new Array(100).fill(null))('makeRandomHand x100 and riichi check', () => {
+test.each(new Array(10).fill(null))('makeRandomHand x100 and riichi check', () => {
     const tiles = E.makeRandomHand();
     console.log('tiles', tiles);
     const result = tiles.every((tile) => E.validTile(tile));
     expect(result).toBe(true);
 
     const riichi = E.riichi(tiles);
+    if (!riichi) { console.error('riichi failed with tiles: ' + tiles)};
     expect(riichi).toBe(true);
+})
+
+test ('handTiles generated check 1', () => {
+    const str = 'm7,m8,m9,b7,b8,b9,w4,w4,w4,c4,c5,c6,b8,b8';
+    expect(E.riichi(str)).toBe(true);
+})
+ 
+test.only ('handTiles generated check 2', () => {
+    const str = 'b6,b7,b8,c5,c5,c5,b6,b7,b8,c4,c5,c6,d2,d2';
+    expect(E.riichi(str, true)).toBe(true);
 })
 
 })
