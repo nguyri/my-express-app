@@ -1,34 +1,5 @@
 const E = require('./validator');
 
-
-test("Hello World! Check", () => {
-    expect(true).toBe(true);
-});
-
-test("validTile Check", () => {
-    expect(E.validTile('b1')).toBe(true);
-});
-
-test ('validTile false check', () => {
-    expect(E.validTile('bb')).toBe(false);
-});
-
-test ('allValidTiles check', () => {
-    expect(E.allValidTiles('b1b2b3c1c2c3m1m2m3drdrdrdgdg')).toBe(true);
-});
-
-test ('allValidTiles false check', () => {
-    expect(E.allValidTiles('b1b2b3c1c2c3m1m2m3drdrdrdgde')).toBe(false);
-});
-
-test ('validLength check', () => {
-    expect(E.validLength('b1b2b3c1c2c3m1m2m3drdrdrdgdg')).toBe(true);
-});
-
-test ('validLength false check', () => {
-    expect(E.validLength('b1b2b3c1c2c3m1m2m3drdrdrdgdgdg')).toBe(false);
-});
-
 function areNestedArraysEqual(arr1, arr2) {
     if (!Array.isArray(arr1) || !Array.isArray(arr2)) return false;
   
@@ -47,6 +18,36 @@ function areNestedArraysEqual(arr1, arr2) {
   
     return true;
   }
+
+describe ('Function Tests', () => {
+
+test("Hello World! Check", () => {
+    expect(true).toBe(true);
+});
+
+test("validTile Check", () => {
+    expect(E.validTile('b1')).toBe(true);
+});
+
+test ('validTile false check', () => {
+    expect(E.validTile('bb')).toBe(false);
+});
+
+test ('allValidString check', () => {
+    expect(E.allValidString('b1b2b3c1c2c3m1m2m3drdrdrdgdg')).toBe(true);
+});
+
+test ('allValidString false check', () => {
+    expect(E.allValidString('b1b2b3c1c2c3m1m2m3drdrdrdgde')).toBe(false);
+});
+
+test ('validLength check', () => {
+    expect(E.validLength('b1b2b3c1c2c3m1m2m3drdrdrdgdg')).toBe(true);
+});
+
+test ('validLength false check', () => {
+    expect(E.validLength('b1b2b3c1c2c3m1m2m3drdrdrdgdgdg')).toBe(false);
+});
 
 test ('suitGroups check', () => {
     const expected = [['b1','b2','b3'],['c1','c2','c3'],['m1','m2','m3'],['d1','d1','d1','d2','d2']];
@@ -339,6 +340,11 @@ test ('handTiles check', () =>  {
     expect(areNestedArraysEqual(E.handTiles(str),expected)).toBe(true);
 })
 
+    
+})
+
+describe('Generated Hands Tests', () => {
+
 test ('makeMeld check 1', () =>  {
     const tile = 'b1';
     const type = 1;
@@ -368,4 +374,13 @@ test ('makeMeld check 4', () =>  {
     const type = 1;
     const result = E.makeMeld(tile, type);
     expect(result).toBe(false);
+})
+
+test ('makeRandomHand check', () => {
+    const tiles = E.makeRandomHand();
+    console.log('tiles', tiles);
+    const result = tiles.every((tile) => E.validTile(tile));
+    expect(result).toBe(true);
+})
+    
 })
