@@ -72,8 +72,8 @@ function getMeldsAndPair(suitGroup) {
         console.log('pairless:', pairless)
         meldset.push([...validMelds(pairless), [pair, pair]]);
     })
-    console.log('meldset', meldset);
     meldset.sort((meldsetA, meldsetB) => meldsetA.flat(5).length > meldsetB.flat(5).length ? -1: 1);
+    console.log('meldset', meldset);
     return meldset[0];
 }
 
@@ -124,7 +124,7 @@ function validMelds(suitGroup) {
                 // if 1+ identical straights are confirmed, add it to the "unique melds". 
                 // why this way? so that the identical straight is added to all possible combinations
                 for( let j = 0; j < i; j++ )
-                    uniqueStraights.push = straight; 
+                    uniqueStraights.push(straight); 
             }
         })
     }
@@ -265,7 +265,7 @@ function countPairs(melds) {
 
 function riichi (handStr, printMelds) {
     const tiles = Array.isArray(handStr) ? handStr : handTiles(handStr);
-    tiles.sort((tileA, tileB) => tileOrder(tileA, tileB))
+    
     const suits = suitGroups(tiles);
     const melds = suits.map((suit) => getMelds(suit))
 
