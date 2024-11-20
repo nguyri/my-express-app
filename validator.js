@@ -97,22 +97,40 @@ function validMelds(suitGroup) {
     // make all combinations of melds up to the max amount possible
     // check each combination and return the first (for now) largest combination
     if(suitGroup.length === 0 ) return [];
+    const maxMelds = suitGroup.length / 3; // max melds possible
     const straights = getCombinations(suitGroup, 3).filter((combi) => isStraight(combi));
     const triples = getCombinations(suitGroup, 3).filter((combi) => isTriple(combi));
-    const uniqueStraights = straights.filter((value, index, self) => 
+    let uniqueStraights = straights.filter((value, index, self) => 
         index === self.findIndex((t) => JSON.stringify(t) === JSON.stringify(value)));
     const uniqueTriples = triples.filter((value, index, self) => 
         index === self.findIndex((t) => JSON.stringify(t) === JSON.stringify(value)));
+    
+    // console.log('straights: ', straights)
+    // console.log('triples: ', triples)
+    // console.log('unique straights: ', uniqueStraights)
+    // console.log('unique triples: ', uniqueTriples)
+    
+    // straights may be duplicated, but triples cannot (not enough tiles)
+    // in this case uniqueStraights will be 1 meld but length is 6. But this is not enough to distinguish 2 identical straights, i.e. straight and triple in the suit
+    // confirmMelds already provides functionality to check if melds exist in a hand, so skip a few steps and see if two identical melds exist
+    // index starts with checking 2 identical straights
+    for(let i = 2; i <= maxMelds; i++) {
+        uniqueStraights.forEach((straight) => {
+            console.log('in uniqueStraights')
+            const straightsMeldSet = Array(i).fill(straight);
+            console.log('straightMeldSet: ', straightsMeldSet)
+            if ( confirmMelds(suitGroup, straightsMeldSet)) {
+                uniqueStraights = straightsMeldSet; 
+            }
+        })
+    }
+    
     const possibleMelds = [...uniqueStraights, ...uniqueTriples];
-
-    // console.log('straights: ', uniqueStraights)
-    // console.log('triples: ', uniqueTriples)
-    // console.log('possibleMelds:', possibleMelds)
-
-    const maxMelds = suitGroup.length / 3; // max melds possible
     const possibleMeldSets = getAllCombinations(possibleMelds, maxMelds);
     const confirmedMeldSets = possibleMeldSets.filter((meldset) => confirmMelds(suitGroup, meldset))
     const orderedMeldSets = confirmedMeldSets.sort((msA, msB) => msA.length < msB.length ? 1: -1);
+    // console.log('uniqueStraights: ', uniqueStraights);
+    // console.log('possibleMelds:', possibleMelds)
     // console.log('possibleMeldSets: ', possibleMeldSets);
     // console.log('confirmedMeldSets: ', confirmedMeldSets);
     // console.log('orderedMeldSets', orderedMeldSets)
@@ -206,6 +224,7 @@ function getAllCombinations(suitGroup, maxSize) {
     for(let size = 1; size <= maxSize; size++) {
         allCombinations.push(...getCombinations(suitGroup, size));
     }
+    console.log('allCombinations:', allCombinations);
     return allCombinations;
 }
 

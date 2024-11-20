@@ -137,6 +137,14 @@ test ('validMelds check', () => {
     expect(areNestedArraysEqual(singleExpected, result)).toBe(true);
 })
 
+test ('validMelds check', () => {
+    const singleSuitGroup = ['b1','b2','b3','b1','b2','b3'];
+    const result = E.validMelds(singleSuitGroup);
+    const singleExpected = [['b1','b2','b3'],['b1','b2','b3']];
+    // console.log(':', result);
+    expect(areNestedArraysEqual(singleExpected, result)).toBe(true);
+})
+
 test ('validMeld check 2', () => {
     const singleSuitGroup = ['b1','b2','b3'];
     const result = E.validMeld(singleSuitGroup);
@@ -211,19 +219,20 @@ test ('getCombinations check', () => {
     expect(areNestedArraysEqual(result, expected)).toBe(true);
 })
 
-test ('getCombinations check', () => {
-    const input = ['b1s','b2s'];
-    const expected = [['b1s'],['b2s']]
-    const result = E.getCombinations(input, 1);
-    console.log(result);
+
+test ('getAllCombinations check', () => {
+    const input = ['b1','b2','b3'];
+    const expected = [ ['b1'], ['b2'], ['b3'], ['b1', 'b2'], ['b1', 'b3'], 
+        ['b2', 'b3'], ['b1', 'b2', 'b3'] ];
+    const result = E.getAllCombinations(input, 3);
     expect(areNestedArraysEqual(result, expected)).toBe(true);
 })
 
 test ('getAllCombinations check', () => {
-    const input = ['b1s','b2s'];
-    const expected = [['b1s'],['b2s'], ['b1s','b2s']];
+    const input = [['b1','b2','b3']];
+    const expected = [ ['b1','b2','b3'], [['b1','b2','b3'],['b1','b2','b3']] ];
+    //somewhat confusing but the entire meld ['b1','b2','b3'] is the element, and should be combined.
     const result = E.getAllCombinations(input, 2);
-    console.log(result);
     expect(areNestedArraysEqual(result, expected)).toBe(true);
 })
 
@@ -232,6 +241,7 @@ test ('getAllCombinations check', () => {
     const expected = [ ['b1'], ['b2'], ['b3'], ['b1', 'b2'], ['b1', 'b3'], 
         ['b2', 'b3'], ['b1', 'b2', 'b3'] ];
     const result = E.getAllCombinations(input, 3);
+    expect(areNestedArraysEqual(result, expected)).toBe(true);
 })
 
 test ('validSuit check', () => {
