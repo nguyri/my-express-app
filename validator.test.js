@@ -220,7 +220,7 @@ test ('getCombinations check', () => {
 })
 
 
-test ('getAllCombinations check', () => {
+test ('getAllCombinations check 1', () => {
     const input = ['b1','b2','b3'];
     const expected = [ ['b1'], ['b2'], ['b3'], ['b1', 'b2'], ['b1', 'b3'], 
         ['b2', 'b3'], ['b1', 'b2', 'b3'] ];
@@ -228,15 +228,16 @@ test ('getAllCombinations check', () => {
     expect(areNestedArraysEqual(result, expected)).toBe(true);
 })
 
-test ('getAllCombinations check', () => {
-    const input = [['b1','b2','b3']];
-    const expected = [ ['b1','b2','b3'], [['b1','b2','b3'],['b1','b2','b3']] ];
+test ('getAllCombinations check 2', () => {
+    const input = [['b1','b2','b3'],['b1','b2','b3']];
+    const expected = [ [['b1','b2','b3']],[['b1','b2','b3']], [['b1','b2','b3'],['b1','b2','b3']] ];
     //somewhat confusing but the entire meld ['b1','b2','b3'] is the element, and should be combined.
     const result = E.getAllCombinations(input, 2);
+    console.log(result);
     expect(areNestedArraysEqual(result, expected)).toBe(true);
 })
 
-test ('getAllCombinations check', () => {
+test ('getAllCombinations check 3', () => {
     const input = ['b1','b2','b3'];
     const expected = [ ['b1'], ['b2'], ['b3'], ['b1', 'b2'], ['b1', 'b3'], 
         ['b2', 'b3'], ['b1', 'b2', 'b3'] ];
@@ -321,7 +322,7 @@ test ('confirmMelds check', () => {
     expect(result === expected).toBe(true);
 })
 
-test.only ('confirmMelds false check', () => {
+test ('confirmMelds false check', () => {
     const suitGroup = [ 'b1', 'b2', 'b2', 'b3', 'b3', 'b4' ];
     const melds = [ [ 'b2', 'b3', 'b4' ], [ 'b2', 'b3', 'b4' ] ];
     const result = E.confirmMelds(suitGroup, melds);
@@ -400,7 +401,7 @@ test ('makeRandomHand check', () => {
     expect(result).toBe(true);
 })
 
-test.each(new Array(10).fill(null))('makeRandomHand x100 and riichi check', () => {
+test.only.each(new Array(10).fill(null))('makeRandomHand x100 and riichi check', () => {
     const tiles = E.makeRandomHand();
     console.log('tiles', tiles);
     const result = tiles.every((tile) => E.validTile(tile));
