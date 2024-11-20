@@ -265,6 +265,7 @@ function countPairs(melds) {
 
 function riichi (handStr, printMelds) {
     const tiles = Array.isArray(handStr) ? handStr : handTiles(handStr);
+    tiles.sort((tileA, tileB) => tileOrder(tileA, tileB))
     const suits = suitGroups(tiles);
     const melds = suits.map((suit) => getMelds(suit))
 
