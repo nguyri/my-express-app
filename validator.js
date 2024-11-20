@@ -350,25 +350,40 @@ function makeRandomHand() {
     //map available melds and pairs to ints
     // triples 1-9 bamboo, 11-19 circle, 21-29 man, 31-33 dragon, 41-44 wind
     // pick  5 tiles for melds
-    const randomTiles = []
-    const max = 44, min = 1;
-    while(randomTiles.length < 5) {
-        const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
-        const tile = tileFromNumber(randomNum)
-        if ( tile ) randomTiles.push(tile);
-    }
-    console.log(randomTiles);
-    const tiles = []
-    for(let i = 0; i < 4; i++) {
-        if ( isHonor ( randomTiles[i] ) )  tiles.push (...makeMeld(randomTiles[i], 2)); // honor can only be triple
-        else {
-            let rand = 2;
-            if (randomTiles[i].charAt(1) <= 7)
-                rand = Math.floor(( Math.random() * 2 ) + 1);   
-            tiles.push(...makeMeld(randomTiles[i] , rand));
+    function fiveInHand(array) {
+        const freqMap = new Map();
+        for (const item of array) {
+            const count = (freqMap.get(item) || 0) + 1;
+            // console.log('freqmap: ', freqMap, array)
+            if (count >= 5) return true;
+            freqMap.set(item, count);
         }
+        return false;
     }
-    tiles.push(...makeMeld(randomTiles[4] , 3));  // add the pair
+    const max = 44, min = 1;
+    let randomTiles = []
+    let tiles = []
+    do {
+        randomTiles = [];
+        tiles = [];
+        while(randomTiles.length < 5) {
+            const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+            const tile = tileFromNumber(randomNum)
+            if ( tile ) randomTiles.push(tile);
+        }
+        console.log(randomTiles);
+        for(let i = 0; i < 4; i++) {
+            if ( isHonor ( randomTiles[i] ) )  tiles.push (...makeMeld(randomTiles[i], 2)); // honor can only be triple
+            else {
+                let rand = 2;
+                if (randomTiles[i].charAt(1) <= 7)
+                    rand = Math.floor(( Math.random() * 2 ) + 1);   
+                tiles.push(...makeMeld(randomTiles[i] , rand));
+            }
+        }
+    
+        tiles.push(...makeMeld(randomTiles[4] , 3));  // add the pair
+    } while (fiveInHand(tiles))
 
     return tiles;
     
