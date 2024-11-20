@@ -80,15 +80,16 @@ function getMeldsAndPair(suitGroup) {
 function confirmMelds(suitGroup, meldSet) {
     meldSet = meldSet.flat();
     suitGroup = suitGroup.flat();
-    console.log('meldset: ', meldSet);
-    console.log('suitgroup: ', suitGroup);
+    // console.log('meldset: ', meldSet);
+    // console.log('suitgroup: ', suitGroup);
     const result = [...suitGroup] 
-    meldSet.forEach((tile) => {
+    for (const tile of meldSet) {
         const index = result.indexOf(tile);
         if (index !== -1) {
             result.splice(index, 1); // remove 1 instance of tile
         } else return false;
-    })
+    }
+    // console.log(result, "all tiles found");
     return true;
 }
 
@@ -105,10 +106,10 @@ function validMelds(suitGroup) {
     const uniqueTriples = triples.filter((value, index, self) => 
         index === self.findIndex((t) => JSON.stringify(t) === JSON.stringify(value)));
     
-    // console.log('straights: ', straights)
-    // console.log('triples: ', triples)
-    // console.log('unique straights: ', uniqueStraights)
-    // console.log('unique triples: ', uniqueTriples)
+    console.log('straights: ', straights)
+    console.log('triples: ', triples)
+    console.log('unique straights: ', uniqueStraights)
+    console.log('unique triples: ', uniqueTriples)
     
     // straights may be duplicated, but triples cannot (not enough tiles)
     // in this case uniqueStraights will be 1 meld but length is 6. But this is not enough to distinguish 2 identical straights, i.e. straight and triple in the suit
@@ -120,6 +121,7 @@ function validMelds(suitGroup) {
             const straightsMeldSet = Array(i).fill(straight);
             console.log('straightMeldSet: ', straightsMeldSet)
             if ( confirmMelds(suitGroup, straightsMeldSet)) {
+                console.log('identical set confirmed:', straightsMeldSet)
                 uniqueStraights = straightsMeldSet; 
             }
         })
@@ -129,11 +131,11 @@ function validMelds(suitGroup) {
     const possibleMeldSets = getAllCombinations(possibleMelds, maxMelds);
     const confirmedMeldSets = possibleMeldSets.filter((meldset) => confirmMelds(suitGroup, meldset))
     const orderedMeldSets = confirmedMeldSets.sort((msA, msB) => msA.length < msB.length ? 1: -1);
-    // console.log('uniqueStraights: ', uniqueStraights);
-    // console.log('possibleMelds:', possibleMelds)
-    // console.log('possibleMeldSets: ', possibleMeldSets);
-    // console.log('confirmedMeldSets: ', confirmedMeldSets);
-    // console.log('orderedMeldSets', orderedMeldSets)
+    console.log('uniqueStraights: ', uniqueStraights);
+    console.log('possibleMelds:', possibleMelds)
+    console.log('possibleMeldSets: ', possibleMeldSets);
+    console.log('confirmedMeldSets: ', confirmedMeldSets);
+    console.log('orderedMeldSets', orderedMeldSets)
     return orderedMeldSets[0] ? orderedMeldSets[0] : [];
 }
 

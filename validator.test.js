@@ -129,11 +129,11 @@ test ('validMelds check', () => {
     expect(areNestedArraysEqual(singleExpected, result)).toBe(true);
 })
 
-test.only ('validMelds double straight check', () => {
+test ('validMelds double straight check', () => {
     const singleSuitGroup = ['b1','b2','b3','b2','b3','b4'];
     const result = E.validMelds(singleSuitGroup);
     const singleExpected = [['b1','b2','b3'],['b2','b3','b4']];
-    // console.log(':', result);
+    console.log('result:', result);
     expect(areNestedArraysEqual(singleExpected, result)).toBe(true);
 })
 
@@ -321,6 +321,14 @@ test ('confirmMelds check', () => {
     expect(result === expected).toBe(true);
 })
 
+test.only ('confirmMelds false check', () => {
+    const suitGroup = [ 'b1', 'b2', 'b2', 'b3', 'b3', 'b4' ];
+    const melds = [ [ 'b2', 'b3', 'b4' ], [ 'b2', 'b3', 'b4' ] ];
+    const result = E.confirmMelds(suitGroup, melds);
+    const expected = false;
+    expect(result).toBe(false);
+})
+
 test ('tileOrder check', () => {
     expect(E.tileOrder('b1','b2') === -1).toBe(true);
 })
@@ -392,7 +400,7 @@ test ('makeRandomHand check', () => {
     expect(result).toBe(true);
 })
 
-test.only.each(new Array(10).fill(null))('makeRandomHand x100 and riichi check', () => {
+test.each(new Array(10).fill(null))('makeRandomHand x100 and riichi check', () => {
     const tiles = E.makeRandomHand();
     console.log('tiles', tiles);
     const result = tiles.every((tile) => E.validTile(tile));
