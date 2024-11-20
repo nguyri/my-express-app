@@ -55,10 +55,10 @@ function getMeldsAndPair(suitGroup) {
     const pairs = getCombinations(suitGroup, 2).filter((combi) => isPair(combi));
     // only the first number is needed to identify a pair
     const uniquePairs = [...new Set(pairs.map(pair => pair[0]))];
-    console.log('uniquePairs:', uniquePairs);
+    // console.log('uniquePairs:', uniquePairs);
 
     const meldset = []
-    console.log('meldset', meldset);
+    // console.log('meldset', meldset);
     uniquePairs.forEach((pair) => {
         let removedCount = 0;
         const pairless = suitGroup.filter(item => {
@@ -69,11 +69,11 @@ function getMeldsAndPair(suitGroup) {
             return true; // keep this tile
         })
         // for now melds has this pattern.. [[d1,d1,d1],[d2,d2]]
-        console.log('pairless:', pairless)
+        // console.log('pairless:', pairless)
         meldset.push([...validMelds(pairless), [pair, pair]]);
     })
     meldset.sort((meldsetA, meldsetB) => meldsetA.flat(5).length > meldsetB.flat(5).length ? -1: 1);
-    console.log('meldset', meldset);
+    // console.log('meldset', meldset);
     return meldset[0];
 }
 
@@ -106,10 +106,10 @@ function validMelds(suitGroup) {
     const uniqueTriples = triples.filter((value, index, self) => 
         index === self.findIndex((t) => JSON.stringify(t) === JSON.stringify(value)));
     
-    console.log('straights: ', straights)
-    console.log('triples: ', triples)
-    console.log('unique straights: ', uniqueStraights)
-    console.log('unique triples: ', uniqueTriples)
+    // console.log('straights: ', straights)
+    // console.log('triples: ', triples)
+    // console.log('unique straights: ', uniqueStraights)
+    // console.log('unique triples: ', uniqueTriples)
     
     // straights may be duplicated, but triples cannot (not enough tiles)
     // in this case uniqueStraights will be 1 meld but length is 6. But this is not enough to distinguish 2 identical straights, i.e. straight and triple in the suit
@@ -133,11 +133,11 @@ function validMelds(suitGroup) {
     const possibleMeldSets = getAllCombinations(possibleMelds, maxMelds);
     const confirmedMeldSets = possibleMeldSets.filter((meldset) => confirmMelds(suitGroup, meldset))
     const orderedMeldSets = confirmedMeldSets.sort((msA, msB) => msA.length < msB.length ? 1: -1);
-    console.log('uniqueStraights: ', uniqueStraights);
-    console.log('possibleMelds:', possibleMelds)
-    console.log('possibleMeldSets: ', possibleMeldSets);
-    console.log('confirmedMeldSets: ', confirmedMeldSets);
-    console.log('orderedMeldSets', orderedMeldSets)
+    // console.log('uniqueStraights: ', uniqueStraights);
+    // console.log('possibleMelds:', possibleMelds)
+    // console.log('possibleMeldSets: ', possibleMeldSets);
+    // console.log('confirmedMeldSets: ', confirmedMeldSets);
+    // console.log('orderedMeldSets', orderedMeldSets)
     return orderedMeldSets[0] ? orderedMeldSets[0] : [];
 }
 
@@ -228,7 +228,7 @@ function getAllCombinations(suitGroup, maxSize) {
     for(let size = 1; size <= maxSize; size++) {
         allCombinations.push(...getCombinations(suitGroup, size));
     }
-    console.log('allCombinations:', allCombinations);
+    // console.log('allCombinations:', allCombinations);
     return allCombinations;
 }
 
@@ -341,7 +341,7 @@ function handTiles (handStr) {
 function makeMeld(tile, type) {
     //type 1: straight, type 2: triple, type 3: pair
     const tileNum = numberTile(tile);
-    console.log('make meld:', tile, type);
+    // console.log('make meld:', tile, type);
     if (type === 1) {
         if ( isHonor(tile) ) return false;
         return [tile, tileFromNumber(tileNum + 1), tileFromNumber(tileNum + 2)]; 
@@ -376,7 +376,7 @@ function makeRandomHand() {
             const tile = tileFromNumber(randomNum)
             if ( tile ) randomTiles.push(tile);
         }
-        console.log(randomTiles);
+        // console.log(randomTiles);
         for(let i = 0; i < 4; i++) {
             if ( isHonor ( randomTiles[i] ) )  tiles.push (...makeMeld(randomTiles[i], 2)); // honor can only be triple
             else {
