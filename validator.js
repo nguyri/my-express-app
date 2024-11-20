@@ -116,13 +116,15 @@ function validMelds(suitGroup) {
     // confirmMelds already provides functionality to check if melds exist in a hand, so skip a few steps and see if two identical melds exist
     // index starts with checking 2 identical straights
     for(let i = 2; i <= maxMelds; i++) {
-        uniqueStraights.forEach((straight) => {
-            console.log('in uniqueStraights')
+        uniqueStraights.forEach((straight, index) => {
             const straightsMeldSet = Array(i).fill(straight);
-            console.log('straightMeldSet: ', straightsMeldSet)
+            // console.log('in uniqueStraights')
+            // console.log('straightMeldSet: ', straightsMeldSet)
             if ( confirmMelds(suitGroup, straightsMeldSet)) {
-                console.log('identical set confirmed:', straightsMeldSet)
-                uniqueStraights = straightsMeldSet; 
+                // if 1+ identical straights are confirmed, add it to the "unique melds". 
+                // why this way? so that the identical straight is added to all possible combinations
+                for( let j = 0; j < i; j++ )
+                    uniqueStraights.push = straight; 
             }
         })
     }

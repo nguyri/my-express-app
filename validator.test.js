@@ -401,7 +401,7 @@ test ('makeRandomHand check', () => {
     expect(result).toBe(true);
 })
 
-test.only.each(new Array(10).fill(null))('makeRandomHand x100 and riichi check', () => {
+test.each(new Array(10).fill(null))('makeRandomHand x100 and riichi check', () => {
     const tiles = E.makeRandomHand();
     console.log('tiles', tiles);
     const result = tiles.every((tile) => E.validTile(tile));
@@ -419,6 +419,11 @@ test ('handTiles generated check 1', () => {
  
 test ('handTiles generated check 2', () => {
     const str = 'b6,b7,b8,c5,c5,c5,b6,b7,b8,c4,c5,c6,d2,d2';
+    expect(E.riichi(str, true)).toBe(true);
+})
+
+test.only ('handTiles generated check 3', () => {
+    const str = 'c3,c4,c5,c4,c5,c6,b2,b2,b2,c1,c2,c3,b8,b8';
     expect(E.riichi(str, true)).toBe(true);
 })
 
