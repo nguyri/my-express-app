@@ -22,7 +22,7 @@ function validTile (tile) {
   
 function allValidString (handStr) {
     const tiles = handTiles(handStr);
-    console.log(tiles);
+    // console.log(tiles);
     let allValid = tiles.every(tile => validTile(tile));
     return allValid;
   }
@@ -189,7 +189,7 @@ function getNumbers(subTile) {
 function getSuits(groups) {
     //either a nested array or an array with a single suited group in it
     let suits = []
-    console.log(groups);
+    // console.log(groups);
     groups.forEach((group) => {
         if (group.length < 1) return;
         const tile = group.at(0)

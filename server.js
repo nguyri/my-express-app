@@ -34,17 +34,17 @@ app.get('/api/message', (req, res) => {
   });
 
 // Example POST API endpoint
-app.post('/api/riichi', (req, res) => {
+app.post('/api/queries/riichi', (req, res) => {
   try {
     const { query } = req.body;
     if (!query || typeof query !== 'string') {
       return res.status(400).json({ error: 'Invalid query parameter' });
     }
     const output = jsonResults(query);
-    console.log('output:', output);
+    // console.log('output:', output);
     res.json(output);
   } catch (err) {
-    console.error('Error: ', err);
+    // console.error('Error: ', err);
     res.status(500).json({ error: 'Internal server error' })
   }
   });
