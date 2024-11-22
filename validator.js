@@ -43,22 +43,18 @@ function suitGroups(tiles) {
 }
 
 function getMelds(suitGroup) {
-    // console.log('suitGroup: ', suitGroup);
     const remainder = suitGroup.length % 3;
     if (remainder == 1) return; // no valid options if remainder is 1
-    if (remainder == 2) return getMeldsAndPair(suitGroup);
+    if (remainder == 2) return getMeldsAndPair(suitGroup); // remainder has to be a pair
     if (remainder == 0) return validMelds(suitGroup);
 }
 
 function getMeldsAndPair(suitGroup) {
     // find pairs. For each that exist, put the rest of the tiles into validMelds
     const pairs = getCombinations(suitGroup, 2).filter((combi) => isPair(combi));
-    // only the first number is needed to identify a pair
     const uniquePairs = [...new Set(pairs.map(pair => pair[0]))];
-    // console.log('uniquePairs:', uniquePairs);
 
     const meldset = []
-    // console.log('meldset', meldset);
     uniquePairs.forEach((pair) => {
         let removedCount = 0;
         const pairless = suitGroup.filter(item => {
