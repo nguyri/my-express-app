@@ -31,6 +31,13 @@ app.use(cors());
 app.use('/api/', limiter); // Apply rate limiting to all /api/ routes
 app.use(express.json({ limit: '10kb' })); // Limit JSON payload to 10 KB
 
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    return res.status(400).json({ error: 'Malformed JSON payload' });
+  }
+  next();
+});
+
 // Define a simple route
 app.get('/', (req, res) => {
     res.send('Hello, World!');
